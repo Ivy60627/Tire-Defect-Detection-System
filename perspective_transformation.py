@@ -18,8 +18,7 @@ p2 = np.float32([[50,0], [3950,0], [x_2,3600], [4000 - x_2 ,3600]])
 # p2 = np.float32([[100,0], [3900,0], [453,3650], [3557,3650]])
 m = cv2.getPerspectiveTransform(p1, p2)
 
-path = r'G:\其他電腦\mycomputer1209\60403\大學學校作業\碩一\邊緣運算\picture'
-#path = r'C:\Users\iamiv\Desktop\60403\大學學校作業\碩一\邊緣運算\picture'
+path = './picture/'
 pic_list = []
 
 for root,dirs,files in os.walk(path):
@@ -28,7 +27,7 @@ for root,dirs,files in os.walk(path):
 		pic_list.append(file)
         
 for pic in pic_list:
-    img = cv2.imread('picture\\' +  pic + '.png',)    
+    img = cv2.imread(path +  pic + '.png',)    
     
     #cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
     #cv2.imshow('image',img)
@@ -50,7 +49,7 @@ for pic in pic_list:
     
     #cv2.namedWindow('image2', cv2.WINDOW_KEEPRATIO)
     #cv2.imshow('image2', output)
-    cv2.imwrite('picture\\' + pic + '_output.png', output)
+    cv2.imwrite('transformation\\' + pic + '_t.png', output)
     
     cv2.waitKey(0)
     cv2.destroyAllWindows()
