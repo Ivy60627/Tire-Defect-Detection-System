@@ -39,7 +39,7 @@ for pic in pic_list:
     plt.subplot(1,2,1)
     plt.imshow(img_original)
     plt.xticks([]), plt.yticks([])
-    plt.title('origin image')
+    plt.title('original image')
 
     img_gardien = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
     plt.subplot(1,2,2)
