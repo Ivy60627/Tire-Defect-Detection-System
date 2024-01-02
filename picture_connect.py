@@ -1,7 +1,9 @@
 import os
 import cv2
 import numpy as np
+import time
 from PIL import Image
+
 
 IMAGE_SIZE = 6000
 
@@ -46,7 +48,8 @@ for root,dirs,files in os.walk(path):
 print("Finish reading " + str(len(pic_list)) + " pictures!")
 pic_list = pic_list[:6] # 取前六
     
-for index, pic_list in enumerate(pic_list):        
+for index, pic_list in enumerate(pic_list):
+    start = time.time()        
     img = cv2.imread(path + pic_list + '.png')        
     # 調整圖片大小並加上黑邊
     img = resize_image(img)
@@ -66,22 +69,23 @@ for index, pic_list in enumerate(pic_list):
     # 取得圖像的高度和寬度
     (h, w) = img.shape[:2]
     # 計算圖像的中心點
-    center = (3727,2964)
+    center = (3452, 3010)
     # 取得旋轉矩陣
     M = cv2.getRotationMatrix2D(center, index*60, 1.0)
     cos=np.abs(M[0,0])
     sin=np.abs(M[0,1])
     nw = int((h*sin)+(w*cos)) #往右移，需要更大空間
-    nh = int((h*cos)+(w*sin))         
+    nh = int((h*cos)+(w*sin))
     # 旋轉圖像
     output = cv2.warpAffine(img, M, (nw, nh))
     output_Image.append(Image.fromarray(np.uint8(output)))
-    print("Finish rotate " + str(index) + " picture(s)")
+    end = time.time()
+    print("Finish rotate " + str(index + 1) + " picture(s), used " + str(end - start) +" seconds.")
     
 # 新開一張全白的畫布
 bg = Image.new('RGBA',(8000, 8000), '#FFFFFF')
 # 將圖片拼貼到底板上
-for i, _ in enumerate(output_Image):    
+for i, _ in enumerate(output_Image):
     r,g,b,a = output_Image[i].split() 
     bg.paste(output_Image[i],(500, 500),mask=a)   
 

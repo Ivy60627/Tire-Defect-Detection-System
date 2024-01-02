@@ -22,10 +22,20 @@ rot = np.array([[cos(theta), -sin(theta)], [sin(theta), cos(theta)]])
 for pic in pic_list:
     img = cv2.imread(path +  pic + '.png',)     
     
-    x1 = 391
-    y1 = 802
-    x2 = 2967
-    y2 = 2777
+    # x1 = 391
+    # y1 = 802
+    # x2 = 2967
+    # y2 = 2777
+    x1 = 443
+    y1 = 970
+    x2 = 2920
+    y2 = 2501
+    
+    # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
+    # cv2.imshow('image',img)
+    # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     
     #求旋轉後的向量
     v = np.array([x1-x2, y1-y2])
