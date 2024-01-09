@@ -3,13 +3,15 @@ from PyQt5.QtGui import QImage, QPixmap
 
 from UI import Ui_MainWindow
 from function.perspective_transformation import PerspectiveTransformation
+from function.get_roi import GetROI
 
 import cv2
-import numpy as np
+
 
 
 picture_path = './picture/'
 perpsective_path = './transformation/'
+roi_path = './roi/'
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -31,7 +33,7 @@ class MainWindow(QtWidgets.QMainWindow):
                  'label_camera_left4','label_camera_left5','label_camera_left6']
         print(self.ReadPartImage.pic_list)
         for index, pic in enumerate(self.ReadPartImage.pic_list):            
-            img_path = str(perpsective_path + pic) + '.png'
+            img_path = str(roi_path + pic) + '.png'
             self.img = cv2.imread(img_path)
             self.img = cv2.resize(self.img, (115, 115))
             height, width, channel = self.img.shape
@@ -46,6 +48,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
     def __init__(self, parent=None):
         super().__init__()
         self.perspectiveTransformation = PerspectiveTransformation()
+        self.getROI = GetROI()
         self.pic_list = self.perspectiveTransformation.read_image()
 
 
@@ -53,7 +56,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         # 進行圖片透視校正
         self.perspectiveTransformation.transformation_image(self.pic_list)
         # TODO ROI
-        
+        self.getROI.get_roi(self.pic_list)
         # 完成後發送完成訊號
         self.ReadPartImageFinished.emit()
         
