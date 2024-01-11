@@ -19,7 +19,7 @@ for root,dirs,files in os.walk(path):
 theta = np.deg2rad(-60)
 rot = np.array([[cos(theta), -sin(theta)], [sin(theta), cos(theta)]])
         
-for pic in pic_list:
+for pic in pic_list[:2]:
     img = cv2.imread(path +  pic + '.png',)     
     
     # x1 = 391
@@ -51,12 +51,12 @@ for pic in pic_list:
     cv2.line(img, (x1, y1), (x1,x3[1]), (0, 0, 255), 5)
                                
     # 加ROI遮罩
-    mask = np.zeros((4000,4000),dtype=np.uint8)
+    mask = np.zeros((4000,4000), dtype=np.uint8)
     x_data = np.array([x1,x2,x1])
-    y_data = np.array([y1,y2,x3[1]-170])
+    y_data = np.array([y1,y2,x3[1]-45])
     pts=np.vstack((x_data,y_data)).astype(np.int32).T
     cv2.fillPoly(mask,[pts],(255),8,0)
-    img=cv2.bitwise_and(img,img,mask=mask)
+    img=cv2.bitwise_and(img, img, mask=mask)
 
     # 取得圖像的高度和寬度
     (h, w) = img.shape[:2]
@@ -71,8 +71,10 @@ for pic in pic_list:
     # 旋轉圖像
     output = cv2.warpAffine(img, M, (nw, nh))
 
-    # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
-    # cv2.imshow('image',output)
+
+    cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
+    cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
+    cv2.imshow('image',output)
 
     cv2.imwrite('roi/' + pic + '_roi.png', output)
     

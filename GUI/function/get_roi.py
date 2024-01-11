@@ -52,7 +52,7 @@ class GetROI():
             # 加ROI遮罩
             mask = np.zeros((4000,4000),dtype=np.uint8)
             x_data = np.array([x1,x2,x1])
-            y_data = np.array([y1,y2,x3[1]-170])
+            y_data = np.array([y1,y2,x3[1]-45])
             pts=np.vstack((x_data,y_data)).astype(np.int32).T
             cv2.fillPoly(mask,[pts],(255),8,0)
             self.img=cv2.bitwise_and(self.img,self.img,mask=mask)

@@ -2,8 +2,10 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QImage, QPixmap
 
 from UI import Ui_MainWindow
+from function.helperFunction import read_image
 from function.perspective_transformation import PerspectiveTransformation
 from function.get_roi import GetROI
+from function.picture_connect import PictureConnect
 
 import cv2
 
@@ -26,6 +28,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def setup_control(self): # 啟動時預載入函式
         self.ReadPartImage = ReadPartImage()
         self.ReadPartImage.ReadPartImageFinished.connect(self.display_left_img) # 連結訊號到顯示左側圖片
+        self.ReadPartImage.ReadPartImageFinished.connect(self.display_all_img) # 連結訊號到顯示左側圖片
         self.ReadPartImage.start()
         
     def display_left_img(self):
@@ -41,6 +44,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self.qimg = QImage(self.img, width, height, bytesPerline, QImage.Format_RGB888).rgbSwapped()
             exec(f'self.ui.{label_left[index]}.setPixmap(QPixmap.fromImage(self.qimg))')
 
+    def display_all_img(self):
+        img_path = 'connect_output.png'
+        self.img = cv2.imread(img_path)
+        self.img = cv2.resize(self.img, (115, 115))
+        height, width, channel = self.img.shape
+        bytesPerline = 3 * width
+        self.qimg = QImage(self.img, width, height, bytesPerline, QImage.Format_RGB888).rgbSwapped()
+        self.ui.label_tire_all.setPixmap(QPixmap.fromImage(self.qimg))
+
+
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立傳遞信號，設定傳遞型態為任意格式
     perspective_pic_list=[]
@@ -50,13 +63,17 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         self.perspectiveTransformation = PerspectiveTransformation()
         self.getROI = GetROI()
         self.pic_list = self.perspectiveTransformation.read_image()
+        self.pictureConnect = PictureConnect()
+        
 
 
     def run(self):
         # 進行圖片透視校正
         self.perspectiveTransformation.transformation_image(self.pic_list)
-        # TODO ROI
+        #ROI
         self.getROI.get_roi(self.pic_list)
+        # 圖片連結
+        self.pictureConnect.connect_picture(self.pic_list)
         # 完成後發送完成訊號
         self.ReadPartImageFinished.emit()
         
