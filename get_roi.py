@@ -19,7 +19,7 @@ for root,dirs,files in os.walk(path):
 theta = np.deg2rad(-60)
 rot = np.array([[cos(theta), -sin(theta)], [sin(theta), cos(theta)]])
         
-for pic in pic_list[:2]:
+for pic in pic_list:
     img = cv2.imread(path +  pic + '.png',)     
     
     # x1 = 391
@@ -71,10 +71,11 @@ for pic in pic_list[:2]:
     # 旋轉圖像
     output = cv2.warpAffine(img, M, (nw, nh))
 
+    output = output[1000:3700, 1000:3900]
 
-    cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
-    cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
-    cv2.imshow('image',output)
+    # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
+    # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
+    # cv2.imshow('image',output)
 
     cv2.imwrite('roi/' + pic + '_roi.png', output)
     

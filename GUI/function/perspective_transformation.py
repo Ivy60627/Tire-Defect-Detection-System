@@ -1,7 +1,6 @@
 import os
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
 def show_xy(event,x,y,flags,userdata):
     if (event != 0):

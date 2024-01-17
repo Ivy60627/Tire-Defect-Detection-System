@@ -68,7 +68,8 @@ class GetROI():
             nw = int((h*sin)+(w*cos))
             nh = int((h*cos)+(w*sin))
             # 旋轉圖像
-            self.output = cv2.warpAffine(self.img, M, (nw, nh))        
+            self.output = cv2.warpAffine(self.img, M, (nw, nh))
+            self.output = self.output[1000:3700, 1000:3900]
             cv2.imwrite('roi/' + pic + '.png', self.output)
         return self.output
 
