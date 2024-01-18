@@ -31,7 +31,7 @@ class PerspectiveTransformation():
         return self.pic_list
     
     def transformation_image(self, pic_list):
-        for pic in self.pic_list:
+        for pic in pic_list:
             self.img = cv2.imread(self.path +  pic + '.png',)               
             self.output = cv2.warpPerspective(self.img, self.m, (4000, 4000))            
             self.img_original = cv2.cvtColor(self.img, cv2.COLOR_BGR2RGB)
