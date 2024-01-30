@@ -36,8 +36,7 @@ class RLEtoMaskArea():
             
             # TODO json改成名字:總area大小
             
-            
-            
+                        
             self.newdict["labels"]=data['labels']
             self.newdict["maskarea"]=self.maskarea
             
@@ -45,3 +44,4 @@ class RLEtoMaskArea():
             json.dump(self.newdict,tf)
             tf.close()
             print(f"Convert {json_file} successfully.")
+            self.maskarea=[]
