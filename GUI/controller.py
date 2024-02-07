@@ -7,18 +7,24 @@ from function.perspective_transformation import PerspectiveTransformation
 from function.get_roi import GetROI
 from function.picture_connect import PictureConnect
 from function.RLE_to_maskarea import RLEtoMaskArea
+from function.show_defect import ShowDefect
 
 picture_path = './picture/'
 perpsective_path = './transformation/'
 roi_path = './roi/'
-
+area_file_path = "./outputs/areas/"
 
 class MainWindow(QtWidgets.QMainWindow):
+    """
+    ReadPartImage - display_left_img - display_all_img -
+    RLE_to_maskarea - display_defect_location
+       
+    """
     def __init__(self):
         # in python3, super(Class, self).xxx = super().xxx
-        super(MainWindow, self).__init__()
-        self.ShowDefectLocation = ShowDefectLocation()
+        super(MainWindow, self).__init__()        
         self.ReadPartImage = ReadPartImage()
+        self.ShowDefectLocation = ShowDefectLocation()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setup_control()
@@ -32,7 +38,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ShowDefectLocation.ConvertMaskAreaFinished.connect(self.display_defect_location)
 
         self.ReadPartImage.start()
-        self.ShowDefectLocation.start()
 
     def display_left_img(self):
         label_left = ['label_camera_left1', 'label_camera_left2', 'label_camera_left3',
@@ -54,11 +59,23 @@ class MainWindow(QtWidgets.QMainWindow):
         height, width, channel = self.img.shape
         self.qimg = QImage(self.img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
         self.ui.label_tire_all.setPixmap(QPixmap.fromImage(self.qimg))
-
+        self.ShowDefectLocation.start()
+        
     def display_defect_location(self):
-        # TODO
-        pass
+        #TODO change the name and show check
+        label_defect_locaton = ['label_location_dirt','label_location_hair',
+                                'label_location_orange_peel', 
+                                'label_location_overspray',
+                                'label_location_redmark',
+                                'label_location_sanding_scratches',
+                                'label_location_touch_mark']
 
+        for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
+            if self.ShowDefectLocation.json_defect_location[defect] == []:
+                print("zero")
+                pass
+            else:
+                exec(f'self.ui.{label_defect_locaton[element]}.setText(str(self.ShowDefectLocation.json_defect_location[defect]))')
 
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立傳遞信號，設定傳遞型態為任意格式
@@ -95,10 +112,13 @@ class ShowDefectLocation(QtCore.QThread):
         super().__init__()
         self.convertRLEToMaskArea = RLEtoMaskArea()
         self.json_list = self.convertRLEToMaskArea.read_json()
-
+        self.ShowDefect = ShowDefect()
+        
     def run(self):
         self.convertRLEToMaskArea.RLE_to_maskarea(self.json_list)
-
+        self.area_json_list = self.ShowDefect.read_json()
+        self.json_defect_location = self.ShowDefect.show_defect(self.area_json_list)
+        self.ConvertMaskAreaFinished.emit()
 
 if __name__ == '__main__':
     import sys

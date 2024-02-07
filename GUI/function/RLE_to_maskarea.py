@@ -18,7 +18,34 @@ class RLEtoMaskArea():
         		self.json_list.append(file)          
         return self.json_list
         
-
+    def add_masks(self, labels, mask):
+    
+        def find_indices(labels: list, value: int) -> list:
+            """
+            Get the index list of the specific elements
+            :labels: The label list
+            :value: The element that will get the indexs in labels list
+            :Return: return the list of indexs
+    
+            example:
+            labels = [1, 2, 2, 3, 2, 3]
+            value = 2
+            return: [1, 2, 4]
+    
+            """
+    
+            return [index for index, element in enumerate(labels) if element == value]
+    
+        label_element_index_list = [find_indices(labels, x) for x in set(labels)]
+    
+        new_mask = []
+        for index in label_element_index_list:
+            element_masks_sum = sum([mask[x] for x in index])
+            new_mask.append(element_masks_sum)
+    
+        return list(set(labels)), new_mask
+    
+    
     def RLE_to_maskarea(self, json_list):
         for json_file in json_list:        
             f = open(self.json_file_path + json_file) 
@@ -29,17 +56,14 @@ class RLEtoMaskArea():
                 print(f"The file {json_file} doesn't have masks.")
                 continue
                 
-            # decode the RLE code and calculate the mask's area
             for i, _ in enumerate(data["labels"]):
                 mask_decode = mask_util.decode(data["masks"][i])
                 self.maskarea.append(np.count_nonzero(mask_decode))
+         
             
-            # TODO json改成名字:總area大小
-            
-                        
-            self.newdict["labels"]=data['labels']
-            self.newdict["maskarea"]=self.maskarea
-            
+            self.newdict["labels"], self.newdict["maskarea"] = self.add_masks(
+                data["labels"], self.maskarea)
+                
             tf = open(self.json_out_file_path + json_file, "w")
             json.dump(self.newdict,tf)
             tf.close()
