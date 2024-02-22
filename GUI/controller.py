@@ -63,20 +63,27 @@ class MainWindow(QtWidgets.QMainWindow):
         
     def display_defect_location(self):
         #TODO change the name and show check
-        label_defect_locaton = ['label_location_dirt','label_location_hair',
+        label_defect_location = ['label_location_dirt', 'label_location_hair',
                                 'label_location_orange_peel', 
                                 'label_location_overspray',
                                 'label_location_redmark',
                                 'label_location_sanding_scratches',
                                 'label_location_touch_mark']
+        label_defect_check = ['label_check_dirt', 'label_check_hair',
+                                'label_check_orange_peel',
+                                'label_check_overspray',
+                                'label_check_redmark',
+                                'label_check_sanding_scratches',
+                                'label_check_touch_mark']
 
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
-            if self.ShowDefectLocation.json_defect_location[defect] == []:
-                print("zero")
-                pass
+            if self.ShowDefectLocation.json_defect_location[defect]:
+                json_defect_str = ', '.join(str(x) for x in self.ShowDefectLocation.json_defect_location[defect])
+                exec(f'self.ui.{label_defect_check[element]}.setText("Yes")')
+                exec(f'self.ui.{label_defect_location[element]}.setText(json_defect_str)')
             else:
-                exec(f'self.ui.{label_defect_locaton[element]}.setText(str(self.ShowDefectLocation.json_defect_location[defect]))')
-
+                exec(f'self.ui.{label_defect_check[element]}.setText("No")')
+                pass
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立傳遞信號，設定傳遞型態為任意格式
     ReadAllImageFinished = QtCore.pyqtSignal()  # 建立傳遞信號，設定傳遞型態為任意格式
