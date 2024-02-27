@@ -8,10 +8,10 @@ def show_xy(event,x,y,flags,userdata):
         print(event,x,y,flags)
 
 # [x,y]      
-x_1 = 220 
-p1 = np.float32([[x_1,0],[4000 - x_1 ,0], [0,2536], [4000,2536]])
-x_2 = 580
-p2 = np.float32([[50,0], [3950,0], [x_2,3600], [4000 - x_2 ,3600]])
+x_1 = 450 
+p1 = np.float32([[260, x_1], [260, 3000 - x_1], [3930, 0], [3930, 3000]])
+x_2 = 15
+p2 = np.float32([[0, 0], [0, 3000], [4000, x_2], [4000, 3000 - x_2]])
 
 # old
 # p1 = np.float32([[400,200],[3600,200], [3,2536], [3997,2536]])
@@ -29,9 +29,9 @@ for root,dirs,files in os.walk(path):
 for pic in pic_list:
     img = cv2.imread(path +  pic + '.png',)    
     
-    #cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
-    #cv2.imshow('image',img)
-    #cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
+    # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
+    # cv2.imshow('image',img)
+    # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
     
     output = cv2.warpPerspective(img, m, (4000, 4000))
     
