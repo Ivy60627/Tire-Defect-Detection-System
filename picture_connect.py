@@ -5,7 +5,7 @@ import time
 from PIL import Image
 
 
-IMAGE_SIZE = 6000
+IMAGE_SIZE = 7000
 
 def show_xy(event,x,y,flags,userdata):
     if (event != 0):       
@@ -67,7 +67,8 @@ for index, pic_list in enumerate(pic_list):
     # 取得圖像的高度和寬度
     (h, w) = img.shape[:2]
     # 計算圖像的中心點
-    center = (3045, 3373)
+    #center = (3197,2202)
+    center = (3707,3197)
     # 取得旋轉矩陣
     M = cv2.getRotationMatrix2D(center, index*60, 1.0)
     cos=np.abs(M[0,0])
@@ -85,11 +86,11 @@ bg = Image.new('RGBA',(8000, 8000), '#FFFFFF')
 # 將圖片拼貼到底板上
 for i, _ in enumerate(output_Image):
     r,g,b,a = output_Image[i].split() 
-    bg.paste(output_Image[i],(500, 500),mask=a)   
+    bg.paste(output_Image[i],(500, 800),mask=a)   
 
 #轉換為cv2格式
 bg = cv2.cvtColor(np.asarray(bg), cv2.COLOR_RGBA2BGRA)
-bg = bg[850:6700, 450:6800]
+# bg = bg[850:6700, 450:6800]
 # 顯示 + 儲存
 cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
 cv2.imshow('image',bg)            
