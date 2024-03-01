@@ -70,7 +70,7 @@ for pic in pic_list:
     # output = cv2.warpAffine(img, M, (nw, nh))
     # output = output[1000:3700, 1000:3900]
     
-    output = img
+    output = img[0:3300, 300:4000]
     # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
     # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
     # cv2.imshow('image',output)
