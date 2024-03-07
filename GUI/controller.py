@@ -4,12 +4,13 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QImage, QPixmap
 
 from UI import Ui_MainWindow
-from function.RLE_to_maskarea import RLEtoMaskArea
+from function.RLE_to_mask_area import RLEtoMaskArea
 from function.get_label_name import GetLabelName
 from function.get_roi import GetROI
 from function.perspective_transformation import PerspectiveTransformation
 from function.picture_connect import PictureConnect
 from function.show_defect import ShowDefect
+from function.get_defect_rate import GetDefectRate
 
 picture_path = './picture/'
 perspective_path = './transformation/'
@@ -20,8 +21,9 @@ predict_script = "python network/image_demo.py transformation network/config.py 
 
 class MainWindow(QtWidgets.QMainWindow):
     """
+    System pipeline:
     ReadPartImage - display_left_img - display_all_img -
-    RLE_to_maskarea - display_defect_location
+    RLE_to_mask_area - get_defect_rate - display_defect_location
     """
 
     def __init__(self):
@@ -47,21 +49,22 @@ class MainWindow(QtWidgets.QMainWindow):
             img = cv2.imread(img_path)
             img = cv2.resize(img, (115, 115))
             height, width, channel = img.shape
-            self.qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
-            exec(f'self.ui.{label_left[index]}.setPixmap(QPixmap.fromImage(self.qimg))')
+            qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
+            exec(f'self.ui.{label_left[index]}.setPixmap(QPixmap.fromImage(qimg))')
 
     def display_all_img(self):
         img_path = 'connect_output.png'
         img = cv2.imread(img_path)
         img = cv2.resize(img, (450, 450))
         height, width, channel = img.shape
-        self.qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
-        self.ui.label_tire_all.setPixmap(QPixmap.fromImage(self.qimg))
+        qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
+        self.ui.label_tire_all.setPixmap(QPixmap.fromImage(qimg))
         self.ShowDefectLocation.start()
 
     def display_defect_location(self):
         defect_location = GetLabelName.label_defect_location
         defect_check = GetLabelName.label_defect_check
+        defect_rate = GetLabelName.label_defect_rate
 
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
             if self.ShowDefectLocation.json_defect_location[defect]:
@@ -70,6 +73,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                                        json_defect_location[defect]))
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
                 exec(f'self.ui.{defect_location[element]}.setText(json_defect_str)')
+                exec(f'self.ui.{defect_rate[element]}.setText(str(self.ShowDefectLocation.defect_rate[element])+ "%")')
             else:
                 exec(f'self.ui.{defect_check[element]}.setText("No")')
                 pass
@@ -107,8 +111,10 @@ class ShowDefectLocation(QtCore.QThread):
         self.convertRLEToMaskArea = RLEtoMaskArea()
         self.json_list = self.convertRLEToMaskArea.read_json()
         self.ShowDefect = ShowDefect()
+        self.GetDefectRate = GetDefectRate()
 
     def run(self):
         self.convertRLEToMaskArea.RLE_to_maskarea(self.json_list)
         self.json_defect_location = self.ShowDefect.show_defect(self.ShowDefect.read_json())
+        self.defect_rate = self.GetDefectRate.get_defect_rate(self.GetDefectRate.read_json())
         self.ConvertMaskAreaFinished.emit()

@@ -56,19 +56,7 @@ class GetROI:
             cv2.fillPoly(mask, [pts], (255), 8, 0)
             self.img = cv2.bitwise_and(self.img, self.img, mask=mask)
 
-            # 取得圖像的高度和寬度
-            # (h, w) = self.img.shape[:2]
-            # # 計算圖像的中心點
-            # center = (h // 2, w // 2)
-            # # 取得旋轉矩陣
-            # M = cv2.getRotationMatrix2D(center, 91, 1.0)
-            # cos = np.abs(M[0, 0])
-            # sin = np.abs(M[0, 1])
-            # nw = int((h * sin) + (w * cos))
-            # nh = int((h * cos) + (w * sin))
-            # # 旋轉圖像
-            # self.output = cv2.warpAffine(self.img, M, (nw, nh))
-            # self.output = self.output[1000:3700, 1000:3900]
             self.output = self.img[0:3300, 300:4000]
+
             cv2.imwrite('roi/' + pic + '.png', self.output)
         return self.output
