@@ -11,6 +11,7 @@ from function.perspective_transformation import PerspectiveTransformation
 from function.picture_connect import PictureConnect
 from function.show_defect import ShowDefect
 from function.get_defect_rate import GetDefectRate
+from function.get_result_csv import GetResultCSV
 
 picture_path = './picture/'
 perspective_path = './transformation/'
@@ -27,11 +28,13 @@ class MainWindow(QtWidgets.QMainWindow):
     """
 
     def __init__(self):
-        # in python3, super(Class, self).xxx = super().xxx
         super(MainWindow, self).__init__()
+        # initial threads
         self.GetLabelName = GetLabelName()
         self.ReadPartImage = ReadPartImage()
         self.ShowDefectLocation = ShowDefectLocation()
+
+        # initial UI structure
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setup_control()
@@ -77,6 +80,9 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 exec(f'self.ui.{defect_check[element]}.setText("No")')
                 pass
+
+        GetResultCSV(self.ShowDefectLocation.json_defect_location,
+                     self.ShowDefectLocation.defect_rate)
 
 
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
