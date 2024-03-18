@@ -11,7 +11,7 @@ def show_xy(event, x, y, flags, userdata):
 
 class GetROI:
     def __init__(self):
-        self.path = './transformation/'
+        self.path = './images/transformation/'
         self.pic_list = []
 
         # 求旋轉矩陣
@@ -58,5 +58,5 @@ class GetROI:
 
             self.output = self.img[0:3300, 300:4000]
 
-            cv2.imwrite('roi/' + pic + '.png', self.output)
+            cv2.imwrite('images/roi/' + pic + '.png', self.output)
         return self.output

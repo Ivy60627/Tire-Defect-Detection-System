@@ -12,13 +12,12 @@ class GetResultCSV:
         self.LabelName = GetLabelName()
         self.location = location
         self.rate = rate
-        self.column_name = ["種類","位置","比例"]
-        self.savedir = 'reports/'
+        self.column_name = ["種類", "位置", "比例"]
+        self.saved_folder = 'reports/'
         data = {
             "種類": [], "位置": [], "比例": []
         }
         self.csv_df = pd.DataFrame(data)
-        print(self.csv_df)
         self.get_result_csv()
 
     def get_result_csv(self):
@@ -29,19 +28,16 @@ class GetResultCSV:
         try:
             for defect, element in enumerate(self.location):
                 save_dict = {}
-                json_defect_str = ', '.join(GetLabelName.label_defect_direction[direct]
+                json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
                                             for direct, _ in enumerate(self.location[defect]))
-                save_list = [self.LabelName.defect_name[element], json_defect_str, self.rate[element]]
+                save_list = [self.LabelName.defect_name_zh[element], json_defect_str, self.rate[element]]
                 for index, name in enumerate(self.column_name):
                     save_dict[name] = save_list[index]
-                print(save_dict)
                 self.csv_df = pd.concat([self.csv_df, pd.DataFrame([save_dict])], ignore_index=True)
         except Exception as e:
             print(repr(e))
 
-        print(self.csv_df)
-
-        t1 = time.localtime(time.time())
-        t2 = time.strftime('%m_%d_%H_%M_%S', t1)
-        savepath = f"{self.savedir}/{t2}.csv"
-        self.csv_df.to_csv(savepath, encoding='utf-8', index=False)
+        t = time.strftime('%m_%d_%H_%M_%S', time.localtime(time.time()))
+        save_path = f"{self.saved_folder}/{t}.csv"
+        self.csv_df.to_csv(save_path, encoding='utf-8', index=False)
+        print(f"Export the Result to {save_path} successfully.")
