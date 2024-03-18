@@ -8,7 +8,7 @@ def get_key(dicts, value):
 
 class ShowDefect:
     def __init__(self):
-        self.json_defect_file_path = "outputs/areas/"
+        self.json_defect_file_path = "images/outputs/areas/"
         self.defect = {}
         self.json_list = []
         for num in range(7):

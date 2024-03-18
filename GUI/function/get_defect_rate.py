@@ -1,10 +1,8 @@
 import os
 import json
-
-
 import cv2
 
-pic_path = './roi/'
+pic_path = './images/roi/'
 
 
 def get_pixel_num():
@@ -23,7 +21,7 @@ def get_pixel_num():
 
 class GetDefectRate:
     def __init__(self):
-        self.json_defect_file_path = "outputs/areas/"
+        self.json_defect_file_path = "images/outputs/areas/"
         self.defect = {}
         self.defect_rate = {}
         self.json_list = []

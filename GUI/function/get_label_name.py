@@ -1,5 +1,12 @@
 class GetLabelName:
-    defect_name = ['灰塵','毛髮','橘皮','溢漆','紅色記號','刮傷','觸摸痕']
+    defect_name_zh = ['灰塵', '毛髮', '橘皮', '溢漆', '紅色記號', '刮傷', '觸摸痕']
+    defect_name_en = ['Dirt', 'Hair', 'Orange peel', 'Overspray',
+                      'Red mark', 'Sanding scratches', 'Touch mark']
+
+    label_defect_direction_zh = ['正下', '左下', '左上', '正上', '右上', '右下']
+    label_defect_direction_en = ['Bottom', 'Left Bottom', 'Left Top',
+                                 'Top', 'Right Top', 'Right Bottom']
+
     label_left = ['label_camera_left1', 'label_camera_left2', 'label_camera_left3',
                   'label_camera_left4', ' label_camera_left5', 'label_camera_left6']
     label_right = ['label_camera_right1', 'label_camera_right2', 'label_camera_right3',
@@ -23,4 +30,3 @@ class GetLabelName:
                          'label_rate_redmark',
                          'label_rate_sanding_scratches',
                          'label_rate_touch_mark']
-    label_defect_direction = ['正下', '左下', '左上', '正上', '右上', '右下']
