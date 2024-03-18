@@ -30,7 +30,7 @@ class GetResultCSV:
                 save_dict = {}
                 json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
                                             for direct, _ in enumerate(self.location[defect]))
-                save_list = [self.LabelName.defect_name_zh[element], json_defect_str, self.rate[element]]
+                save_list = [self.LabelName.defect_name_en[element], json_defect_str, self.rate[element]]
                 for index, name in enumerate(self.column_name):
                     save_dict[name] = save_list[index]
                 self.csv_df = pd.concat([self.csv_df, pd.DataFrame([save_dict])], ignore_index=True)

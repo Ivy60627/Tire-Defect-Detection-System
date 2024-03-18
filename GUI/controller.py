@@ -76,7 +76,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
             if self.ShowDefectLocation.json_defect_location[defect]:
-                json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
+                json_defect_str = ', '.join(GetLabelName.label_defect_direction_en[direct]
                                             for direct, _ in enumerate(self.ShowDefectLocation.
                                                                        json_defect_location[defect]))
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')

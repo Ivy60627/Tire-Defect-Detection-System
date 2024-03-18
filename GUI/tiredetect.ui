@@ -20,10 +20,10 @@
    <widget class="QPushButton" name="pushButton_reading_images">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>130</x>
       <y>310</y>
-      <width>101</width>
-      <height>23</height>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -33,16 +33,16 @@
      </font>
     </property>
     <property name="text">
-     <string>讀取圖片</string>
+     <string>Read Images</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_export_result">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>370</x>
       <y>310</y>
-      <width>101</width>
-      <height>23</height>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -52,7 +52,7 @@
      </font>
     </property>
     <property name="text">
-     <string>輸出結果</string>
+     <string>Export Reports</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox_tire_side">
@@ -73,7 +73,7 @@
      <bool>true</bool>
     </property>
     <property name="title">
-     <string>區域攝影機</string>
+     <string>Side Camera</string>
     </property>
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
@@ -102,7 +102,7 @@
            </font>
           </property>
           <property name="text">
-           <string>左攝影機</string>
+           <string>Left Camera</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -291,7 +291,7 @@
            </font>
           </property>
           <property name="text">
-           <string>右攝影機</string>
+           <string> Right Camera</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -474,7 +474,7 @@
      </font>
     </property>
     <property name="title">
-     <string>檢測結果</string>
+     <string>Detect Result</string>
     </property>
     <widget class="QWidget" name="horizontalLayoutWidget_3">
      <property name="geometry">
@@ -503,7 +503,8 @@
            </font>
           </property>
           <property name="text">
-           <string>檢測項目</string>
+           <string>Detect
+Name</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -532,7 +533,7 @@
            </font>
           </property>
           <property name="text">
-           <string>灰塵</string>
+           <string>Dirt</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -561,7 +562,7 @@
            </font>
           </property>
           <property name="text">
-           <string>毛髮</string>
+           <string>Hair</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -590,7 +591,8 @@
            </font>
           </property>
           <property name="text">
-           <string>橘皮</string>
+           <string>Orange
+peel</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -619,7 +621,7 @@
            </font>
           </property>
           <property name="text">
-           <string>溢漆</string>
+           <string>Overspray</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -648,7 +650,7 @@
            </font>
           </property>
           <property name="text">
-           <string>紅色記號</string>
+           <string>Red mark</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -677,7 +679,8 @@
            </font>
           </property>
           <property name="text">
-           <string>刮傷</string>
+           <string>Sanding
+scratches</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -706,7 +709,8 @@
            </font>
           </property>
           <property name="text">
-           <string>觸摸痕</string>
+           <string>Touch
+mark</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -739,7 +743,7 @@
            </font>
           </property>
           <property name="text">
-           <string>是否有瑕疵</string>
+           <string>Check</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -968,6 +972,12 @@
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QLabel" name="label_location">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
@@ -975,7 +985,7 @@
            </font>
           </property>
           <property name="text">
-           <string>位置</string>
+           <string>Location</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1268,7 +1278,8 @@
            </font>
           </property>
           <property name="text">
-           <string>瑕疵比例</string>
+           <string>Defect
+Rate</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1561,7 +1572,7 @@
      </font>
     </property>
     <property name="title">
-     <string>全域圖</string>
+     <string>Global Image</string>
     </property>
     <widget class="QLabel" name="label_tire_all">
      <property name="geometry">
@@ -1579,7 +1590,7 @@
       </font>
      </property>
      <property name="text">
-      <string>全域圖</string>
+      <string>Global Image</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
