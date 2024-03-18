@@ -13,10 +13,11 @@ from function.show_defect import ShowDefect
 from function.get_defect_rate import GetDefectRate
 from function.get_result_csv import GetResultCSV
 
-picture_path = './picture/'
-perspective_path = './transformation/'
-roi_path = './roi/'
-area_file_path = "./outputs/areas/"
+
+picture_path = './images/picture/'
+perspective_path = './images/transformation/'
+roi_path = './images/roi/'
+area_file_path = "./images/outputs/areas/"
 predict_script = "python network/image_demo.py transformation network/config.py --weights network/model.pth"
 
 
@@ -37,13 +38,17 @@ class MainWindow(QtWidgets.QMainWindow):
         # initial UI structure
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.process_running = False
         self.setup_control()
+
 
     def setup_control(self):  # 啟動時預載入函式，連結顯示用訊號
         self.ReadPartImage.ReadPartImageFinished.connect(self.display_left_img)
         self.ReadPartImage.ReadAllImageFinished.connect(self.display_all_img)
         self.ShowDefectLocation.ConvertMaskAreaFinished.connect(self.display_defect_location)
-        self.ReadPartImage.start()
+
+        self.ui.pushButton_reading_images.clicked.connect(self.button_reading_images)
+        self.ui.pushButton_export_result.clicked.connect(self.button_export_clicked)
 
     def display_left_img(self):
         label_left = GetLabelName.label_left
@@ -71,7 +76,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
             if self.ShowDefectLocation.json_defect_location[defect]:
-                json_defect_str = ', '.join(GetLabelName.label_defect_direction[direct]
+                json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
                                             for direct, _ in enumerate(self.ShowDefectLocation.
                                                                        json_defect_location[defect]))
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
@@ -80,9 +85,23 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 exec(f'self.ui.{defect_check[element]}.setText("No")')
                 pass
+        print("Process Finished!")
+        self.process_running = False
 
-        GetResultCSV(self.ShowDefectLocation.json_defect_location,
-                     self.ShowDefectLocation.defect_rate)
+    def button_reading_images(self):
+        if not self.process_running:
+            self.process_running = True
+            print("The process is starting!")
+            self.ReadPartImage.start()
+        else:
+            print("This process is still running!")
+
+    def button_export_clicked(self):
+        try:
+            GetResultCSV(self.ShowDefectLocation.json_defect_location,
+                         self.ShowDefectLocation.defect_rate)
+        except Exception as e:
+            print("Can't Export the file now, try again later.")
 
 
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立

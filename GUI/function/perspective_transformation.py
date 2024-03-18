@@ -11,7 +11,7 @@ def show_xy(event, x, y, flags, userdata):
 class PerspectiveTransformation():
     def __init__(self):
         # Set the path of the pictures
-        self.path = './picture/'
+        self.path = './images/picture/'
         self.pic_list = []
 
         # Define the transformation location of the image      
@@ -35,5 +35,5 @@ class PerspectiveTransformation():
             self.img = cv2.imread(self.path + pic + '.png', )
             self.output = cv2.warpPerspective(self.img, self.m, (4000, 4000))
             self.img_original = cv2.cvtColor(self.img, cv2.COLOR_BGR2RGB)
-            cv2.imwrite('transformation\\' + pic + '.png', self.output)
+            cv2.imwrite('images\\transformation\\' + pic + '.png', self.output)
         return self.output

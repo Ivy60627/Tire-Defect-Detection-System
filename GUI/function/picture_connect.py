@@ -14,7 +14,7 @@ class PictureConnect:
     def __init__(self):
         self.IMAGE_SIZE = 7000
         # 讀取圖片路徑
-        self.path = './roi/'
+        self.path = './images/roi/'
         self.pic_list = []
         self.output_Image = []
 

@@ -6,8 +6,8 @@ import json
 
 class RLEtoMaskArea():
     def __init__(self):
-        self.json_file_path = "outputs/preds/"
-        self.json_out_file_path = "outputs/areas/"
+        self.json_file_path = "images/outputs/preds/"
+        self.json_out_file_path = "images/outputs/areas/"
         self.newdict = {}
         self.json_list = []
         self.maskarea = []
