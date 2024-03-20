@@ -4,10 +4,9 @@ class GetLabelName:
                       'Red mark', 'Sanding scratches', 'Touch mark']
 
     label_defect_direction_zh = ['正下', '左下', '左上', '正上', '右上', '右下']
-    #label_defect_direction_en = ['Down', 'Left Down', 'Left Top',
-    #                             'Top', 'Right Top', 'Right Down']
     label_defect_direction_en = ['Down', 'L Down', 'L Top',
                                  'Top', 'R Top', 'R Down']
+
     label_left = ['label_camera_left1', 'label_camera_left2', 'label_camera_left3',
                   'label_camera_left4', ' label_camera_left5', 'label_camera_left6']
     label_right = ['label_camera_right1', 'label_camera_right2', 'label_camera_right3',

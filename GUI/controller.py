@@ -18,7 +18,8 @@ picture_path = './images/picture/'
 perspective_path = './images/transformation/'
 roi_path = './images/roi/'
 area_file_path = "./images/outputs/areas/"
-predict_script = "python network/image_demo.py transformation network/config.py --weights network/model.pth"
+predict_script = ("python network/image_demo.py images/roi network/config.py "
+                  "--weights network/model.pth --out-dir images/outputs/")
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -30,14 +31,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        # initial threads
-        self.GetLabelName = GetLabelName()
         self.ReadPartImage = ReadPartImage()
         self.ShowDefectLocation = ShowDefectLocation()
 
         # initial UI structure
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.GetLabelName = GetLabelName()
         self.process_running = False
         self.setup_control()
 
@@ -49,6 +49,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.pushButton_reading_images.clicked.connect(self.button_reading_images)
         self.ui.pushButton_export_result.clicked.connect(self.button_export_clicked)
+
+
 
     def display_left_img(self):
         label_left = GetLabelName.label_left
@@ -73,20 +75,20 @@ class MainWindow(QtWidgets.QMainWindow):
         defect_location = GetLabelName.label_defect_location
         defect_check = GetLabelName.label_defect_check
         defect_rate = GetLabelName.label_defect_rate
+        json_defect_str = ''
 
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
             if self.ShowDefectLocation.json_defect_location[defect]:
-                json_defect_str = ', '.join(GetLabelName.label_defect_direction_en[direct]
-                                            for direct, _ in enumerate(self.ShowDefectLocation.
-                                                                       json_defect_location[defect]))
+                direction = GetLabelName.label_defect_direction_en
+                location = self.ShowDefectLocation.json_defect_location
+                json_defect_str = ','.join(direction[direct] for direct in range(len(location[defect])))
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
                 exec(f'self.ui.{defect_location[element]}.setText(json_defect_str)')
                 exec(f'self.ui.{defect_rate[element]}.setText(str(self.ShowDefectLocation.defect_rate[element])+ "%")')
             else:
                 exec(f'self.ui.{defect_check[element]}.setText("No")')
                 pass
-        print("Process Finished!")
-        self.process_running = False
+        self.close_threads()
 
     def button_reading_images(self):
         if not self.process_running:
@@ -103,6 +105,11 @@ class MainWindow(QtWidgets.QMainWindow):
         except Exception as e:
             print("Can't Export the file now, try again later.")
 
+    def close_threads(self):
+        self.ReadPartImage.exit()
+        self.ShowDefectLocation.exit()
+        self.process_running = False
+        print("Process Finished!")
 
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立讀取完畢的信號
