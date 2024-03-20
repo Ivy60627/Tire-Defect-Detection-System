@@ -43,10 +43,11 @@ class GetROI:
             if x3[1] > 4000:
                 x3[1] = 4000
 
-            # 畫紅線
-            cv2.line(self.img, (x1, y1), (x2, y2), (0, 0, 255), 5)
-            cv2.line(self.img, x3, (x2, y2), (0, 0, 255), 5)
-            cv2.line(self.img, (x1, y1), x3, (0, 0, 255), 5)
+            # 畫線
+            color = (255, 255, 255)
+            cv2.line(self.img, (x1, y1), (x2, y2), color, 5)
+            cv2.line(self.img, x3, (x2, y2), color, 5)
+            cv2.line(self.img, (x1, y1), x3, color, 5)
 
             # 加ROI遮罩
             mask = np.zeros((4000, 4000), dtype=np.uint8)

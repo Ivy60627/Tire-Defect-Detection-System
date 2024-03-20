@@ -30,6 +30,7 @@ class GetDefectRate:
             self.defect_rate[num] = 0.0
 
     def read_json(self):
+        self.json_list = []
         for root, dirs, files in os.walk(self.json_defect_file_path):
             for file in files:
                 self.json_list.append(file)
@@ -40,6 +41,9 @@ class GetDefectRate:
         :param json_list: defect json
         :return: each defect rate in the wheel
         """
+        for num in range(7):
+            self.defect[num] = 0
+            self.defect_rate[num] = 0.0
 
         for json_file in json_list:
             f = open(self.json_defect_file_path + json_file)
@@ -59,4 +63,5 @@ class GetDefectRate:
         # calculate defect %
         for defect_num in range(7):
             self.defect_rate[defect_num] = round(float(self.defect[defect_num] * 100 / front), 2)
+        print("Finished get defect rate.")
         return self.defect_rate
