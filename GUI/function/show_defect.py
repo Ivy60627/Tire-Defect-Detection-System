@@ -9,22 +9,22 @@ def get_key(dicts, value):
 class ShowDefect:
     def __init__(self):
         self.json_defect_file_path = "images/outputs/areas/"
-        self.defect = {}
-        self.json_list = []
-        for num in range(7):
-            self.defect[num] = []
 
     def read_json(self):
+        json_list = []
         for root, dirs, files in os.walk(self.json_defect_file_path):
             for file in files:
-                self.json_list.append(file)
-        return self.json_list
+                json_list.append(file)
+        return json_list
 
     def show_defect(self, json_list):
         """
         :param json_list: defect json
         :return: the json name numbers
         """
+        defect = {}
+        for num in range(7):
+            defect[num] = []
         for json_file in json_list:
             f = open(self.json_defect_file_path + json_file)
             data = json.load(f)
@@ -36,5 +36,5 @@ class ShowDefect:
 
             label = list(set(data["labels"]))
             for defect_num in label:
-                self.defect[defect_num].append(json_file[6:7])
-        return self.defect
+                defect[defect_num].append(json_file[6:7])
+        return defect
