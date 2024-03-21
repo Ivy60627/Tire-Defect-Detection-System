@@ -2,6 +2,8 @@ import cv2
 import os
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtCore import QTranslator
+from PyQt5.QtWidgets import QApplication
 
 from UI import Ui_MainWindow
 from function.RLE_to_mask_area import RLEtoMaskArea
@@ -13,6 +15,7 @@ from function.show_defect import ShowDefect
 from function.get_defect_rate import GetDefectRate
 from function.get_result_csv import GetResultCSV
 
+translate_to_zh_tw = True
 
 picture_path = './images/picture/'
 perspective_path = './images/transformation/'
@@ -22,7 +25,7 @@ predict_script = ("python network/image_demo.py images/roi network/config.py "
                   "--weights network/model.pth --out-dir images/outputs/")
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     """
     System pipeline:
     ReadPartImage - display_left_img - display_all_img -
@@ -37,8 +40,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # initial UI structure
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.GetLabelName = GetLabelName()
         self.process_running = False
+        self.trans = QTranslator()
         self.setup_control()
 
 
@@ -50,6 +55,23 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_reading_images.clicked.connect(self.button_reading_images)
         self.ui.pushButton_export_result.clicked.connect(self.button_export_clicked)
 
+        if translate_to_zh_tw:
+            self.ui.pushButton_translate.clicked.connect(self.load_language('zh_TW'))
+            #action_chinese = QtWidgets.QAction('Chinese')
+            #self.ui.actionChinese.triggered.connect(self._load_language('zh_tw'))
+            #self.ui.menuMain.addAction(self.ui.actionChinese)
+        else:
+            pass
+            #action_english = QtWidgets.QAction('English')
+            #self.uiactionChinese.triggered.connect(self._load_language('en'))
+
+    def load_language(self, language='zh_TW'):
+        #加載語言包、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
+        self.trans.load(language)
+        _app = QApplication.instance()
+        _app.installTranslator(self.trans)
+        self.retranslateUi(self)
+        pass
 
 
     def display_left_img(self):
@@ -111,6 +133,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.process_running = False
         print("Process Finished!")
 
+
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立讀取完畢的信號
     ReadAllImageFinished = QtCore.pyqtSignal()
@@ -118,7 +141,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
 
     def __init__(self, parent=None):
         super().__init__()
-        self.perspectiveTransformation = PerspectiveTransformation()
+        self.perspectiveTransformation = PerspectiveTransformation(picture_path)
         self.getROI = GetROI()
         self.pic_list = self.perspectiveTransformation.read_image()
         self.pic_list = sorted(self.pic_list)

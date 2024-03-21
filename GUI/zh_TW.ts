@@ -1,172 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="zh_TW" sourcelanguage="en">
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="970"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="997"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>主視窗</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="975"/>
-        <source>Left1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="976"/>
-        <source>Left2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="977"/>
-        <source>Left3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="978"/>
-        <source>Left4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="979"/>
-        <source>Left5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="980"/>
-        <source>Left6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="982"/>
-        <source>Right1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="983"/>
-        <source>Right2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="984"/>
-        <source>Right3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="985"/>
-        <source>Right4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="986"/>
-        <source>Right5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="987"/>
-        <source>Right6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="1007"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1022"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>主視窗</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="971"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="998"/>
         <source>Read Images</source>
-        <translation type="unfinished"></translation>
+        <translation>讀取圖片</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="972"/>
-        <source>Export Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="973"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1000"/>
         <source>Side Camera</source>
-        <translation type="unfinished"></translation>
+        <translation>區域攝影機</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="974"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1001"/>
         <source>Left Camera</source>
-        <translation type="unfinished"></translation>
+        <translation>左攝影機</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="981"/>
-        <source> Right Camera</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1002"/>
+        <source>Right Camera</source>
+        <translation>右攝影機</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="988"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1003"/>
         <source>Detect Result</source>
-        <translation type="unfinished"></translation>
+        <translation>檢測結果</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="989"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1004"/>
         <source>Detect
 Name</source>
-        <translation type="unfinished"></translation>
+        <translation>檢測項目</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="991"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1006"/>
         <source>Dirt</source>
-        <translation type="unfinished"></translation>
+        <translation>灰塵</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="992"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1007"/>
         <source>Hair</source>
-        <translation type="unfinished"></translation>
+        <translation>毛髮</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="993"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1008"/>
         <source>Orange
 peel</source>
-        <translation type="unfinished"></translation>
+        <translation>橘皮</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="995"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1010"/>
         <source>Overspray</source>
-        <translation type="unfinished"></translation>
+        <translation>溢漆</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="996"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1011"/>
         <source>Red mark</source>
-        <translation type="unfinished"></translation>
+        <translation>紅色記號</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="997"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1012"/>
         <source>Sanding
 scratches</source>
-        <translation type="unfinished"></translation>
+        <translation>刮傷</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="999"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1014"/>
         <source>Touch
 mark</source>
-        <translation type="unfinished"></translation>
+        <translation>觸摸痕</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="1001"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1016"/>
         <source>Check</source>
-        <translation type="unfinished"></translation>
+        <translation>是否有瑕疵</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="1002"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1017"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>位置</translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="1003"/>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1018"/>
         <source>Defect
 Rate</source>
+        <translation>瑕疵比例</translation>
+    </message>
+    <message>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1020"/>
+        <source>Global Image</source>
+        <translation>全域圖</translation>
+    </message>
+    <message>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="999"/>
+        <source>Export Report</source>
+        <translation>輸出結果</translation>
+    </message>
+    <message>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1023"/>
+        <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../../../../../���L�q��/mycomputer1209/60403/�j�ǾǮէ@�~/�Ӥ@/���t�B��/GUI/UI.py" line="1006"/>
-        <source>Global Image</source>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1024"/>
+        <source>English</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../../大學學校作業/碩一/邊緣運算/GUI/UI.py" line="1021"/>
+        <source>translate</source>
+        <translation type="unfinished">翻譯</translation>
     </message>
 </context>
 </TS>
