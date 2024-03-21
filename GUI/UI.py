@@ -968,9 +968,6 @@ class Ui_MainWindow(object):
         self.label_tire_all.setText("")
         self.label_tire_all.setAlignment(QtCore.Qt.AlignCenter)
         self.label_tire_all.setObjectName("label_tire_all")
-        self.pushButton_translate = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_translate.setGeometry(QtCore.QRect(20, 310, 75, 23))
-        self.pushButton_translate.setObjectName("pushButton_translate")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1097, 21))
@@ -993,35 +990,37 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
+        def translate(element, string: str):
+            element.setText(QtCore.QCoreApplication.translate("MainWindow", string))
+
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton_reading_images.setText(_translate("MainWindow", "Read Images"))
-        self.pushButton_export_result.setText(_translate("MainWindow", "Export Report"))
-        self.groupBox_tire_side.setTitle(_translate("MainWindow", "Side Camera"))
-        self.label_camera_left.setText(_translate("MainWindow", "Left Camera"))
-        self.label_camera_right.setText(_translate("MainWindow", "Right Camera"))
-        self.groupBox_tire_detect_result.setTitle(_translate("MainWindow", "Detect Result"))
-        self.label_detect.setText(_translate("MainWindow", "Detect\n"
-"Name"))
-        self.label_detect_dirt.setText(_translate("MainWindow", "Dirt"))
-        self.label_detect_hair.setText(_translate("MainWindow", "Hair"))
-        self.label_detect_orange_peel.setText(_translate("MainWindow", "Orange\n"
-"peel"))
-        self.label_detect_overspray.setText(_translate("MainWindow", "Overspray"))
-        self.label_detect_redmark.setText(_translate("MainWindow", "Red mark"))
-        self.label_detect_sanding_scratches.setText(_translate("MainWindow", "Sanding\n"
-"scratches"))
-        self.label_detect_touch_mark.setText(_translate("MainWindow", "Touch\n"
-"mark"))
-        self.label_check.setText(_translate("MainWindow", "Check"))
-        self.label_location.setText(_translate("MainWindow", "Location"))
-        self.label_rate.setText(_translate("MainWindow", "Defect\n"
-"Rate"))
-        self.groupBox_tire_all.setTitle(_translate("MainWindow", "Global Image"))
-        self.pushButton_translate.setText(_translate("MainWindow", "translate"))
-        self.menuMain.setTitle(_translate("MainWindow", "Main"))
-        self.actionChinese.setText(_translate("MainWindow", "Chinese"))
-        self.actionEnglish.setText(_translate("MainWindow", "English"))
+        MainWindow.ui.pushButton_reading_images.setText(_translate("MainWindow", "Read Images"))
+        MainWindow.ui.pushButton_export_result.setText(_translate("MainWindow", "Export Report"))
+        MainWindow.ui.groupBox_tire_side.setTitle(_translate("MainWindow", "Side Camera"))
+        MainWindow.ui.label_camera_left.setText(_translate("MainWindow", "Left Camera"))
+        MainWindow.ui.label_camera_right.setText(_translate("MainWindow", "Right Camera"))
+        MainWindow.ui.groupBox_tire_detect_result.setTitle(_translate("MainWindow", "Detect Result"))
+        MainWindow.ui.label_detect.setText(_translate("MainWindow", "Detect\n"
+                                                                    "Name"))
+        MainWindow.ui.label_detect_dirt.setText(_translate("MainWindow", "Dirt"))
+        MainWindow.ui.label_detect_hair.setText(_translate("MainWindow", "Hair"))
+        MainWindow.ui.label_detect_orange_peel.setText(_translate("MainWindow", "Orange\n"
+                                                                                "peel"))
+        MainWindow.ui.label_detect_overspray.setText(_translate("MainWindow", "Overspray"))
+        MainWindow.ui.label_detect_redmark.setText(_translate("MainWindow", "Red mark"))
+        MainWindow.ui.label_detect_sanding_scratches.setText(_translate("MainWindow", "Sanding\n"
+                                                                                      "scratches"))
+        MainWindow.ui.label_detect_touch_mark.setText(_translate("MainWindow", "Touch\n"
+                                                                               "mark"))
+        MainWindow.ui.label_check.setText(_translate("MainWindow", "Check"))
+        MainWindow.ui.label_location.setText(_translate("MainWindow", "Location"))
+        MainWindow.ui.label_rate.setText(_translate("MainWindow", "Defect\n"
+                                                                  "Rate"))
+        MainWindow.ui.groupBox_tire_all.setTitle(_translate("MainWindow", "Global Image"))
+        MainWindow.ui.menuMain.setTitle(_translate("MainWindow", "Main"))
+        MainWindow.ui.actionChinese.setText(_translate("MainWindow", "Chinese"))
+        MainWindow.ui.actionEnglish.setText(_translate("MainWindow", "English"))
 
 
 if __name__ == "__main__":

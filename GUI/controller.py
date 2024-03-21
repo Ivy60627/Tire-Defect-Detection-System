@@ -46,6 +46,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.trans = QTranslator()
         self.setup_control()
 
+        # Debug option, remember to remove this
+        # self.ui.pushButton_translate.click()
 
     def setup_control(self):  # 啟動時預載入函式，連結顯示用訊號
         self.ReadPartImage.ReadPartImageFinished.connect(self.display_left_img)
@@ -55,24 +57,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ui.pushButton_reading_images.clicked.connect(self.button_reading_images)
         self.ui.pushButton_export_result.clicked.connect(self.button_export_clicked)
 
-        if translate_to_zh_tw:
-            self.ui.pushButton_translate.clicked.connect(self.load_language('zh_TW'))
-            #action_chinese = QtWidgets.QAction('Chinese')
-            #self.ui.actionChinese.triggered.connect(self._load_language('zh_tw'))
-            #self.ui.menuMain.addAction(self.ui.actionChinese)
-        else:
-            pass
-            #action_english = QtWidgets.QAction('English')
-            #self.uiactionChinese.triggered.connect(self._load_language('en'))
+        self.ui.actionChinese.triggered.connect(self.load_language)
+        self.ui.actionEnglish.triggered.connect(self.load_language_en)
 
-    def load_language(self, language='zh_TW'):
-        #加載語言包、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
-        self.trans.load(language)
-        _app = QApplication.instance()
+    def load_language(self):
+        # 加載語言包、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
+        if translate_to_zh_tw:
+            self.trans.load("zh_TW")
+        else:
+            self.trans.load("en")
+        _app = QtWidgets.QApplication.instance()
         _app.installTranslator(self.trans)
         self.retranslateUi(self)
-        pass
 
+    def load_language_en(self):
+        # 加載語言包、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
+        _app = QtWidgets.QApplication.instance()
+        _app.removeTranslator(self.trans)
+        self.retranslateUi(self)
 
     def display_left_img(self):
         label_left = GetLabelName.label_left
