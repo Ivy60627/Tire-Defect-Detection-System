@@ -52,7 +52,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Export Reports</string>
+     <string>Export Report</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox_tire_side">
@@ -131,7 +131,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Left1</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -157,7 +157,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Left2</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -183,7 +183,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Left3</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -209,7 +209,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Left4</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -235,7 +235,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Left5</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -261,7 +261,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Left6</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -291,7 +291,7 @@
            </font>
           </property>
           <property name="text">
-           <string> Right Camera</string>
+           <string>Right Camera</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -320,7 +320,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Right1</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -346,7 +346,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Right2</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -372,7 +372,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Right3</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -398,7 +398,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Right4</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -424,7 +424,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Right5</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -450,7 +450,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Right6</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -479,8 +479,8 @@
     <widget class="QWidget" name="horizontalLayoutWidget_3">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>10</y>
+       <x>10</x>
+       <y>20</y>
        <width>421</width>
        <height>451</height>
       </rect>
@@ -1577,10 +1577,10 @@ Rate</string>
     <widget class="QLabel" name="label_tire_all">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>10</y>
-       <width>450</width>
-       <height>450</height>
+       <x>90</x>
+       <y>20</y>
+       <width>410</width>
+       <height>410</height>
       </rect>
      </property>
      <property name="font">
@@ -1590,12 +1590,25 @@ Rate</string>
       </font>
      </property>
      <property name="text">
-      <string>Global Image</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_translate">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>310</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>translate</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -1611,10 +1624,22 @@ Rate</string>
     <property name="title">
      <string>Main</string>
     </property>
+    <addaction name="actionChinese"/>
+    <addaction name="actionEnglish"/>
    </widget>
    <addaction name="menuMain"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionChinese">
+   <property name="text">
+    <string>Chinese</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
