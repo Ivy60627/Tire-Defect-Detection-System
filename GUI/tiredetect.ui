@@ -1597,19 +1597,6 @@ Rate</string>
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_translate">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>310</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>translate</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
