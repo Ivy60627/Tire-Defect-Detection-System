@@ -9,9 +9,9 @@ def show_xy(event, x, y, flags, userdata):
 
 
 class PerspectiveTransformation():
-    def __init__(self):
+    def __init__(self, path: str):
         # Set the path of the pictures
-        self.path = './images/picture/'
+        self.path = path
         self.pic_list = []
 
         # Define the transformation location of the image      
