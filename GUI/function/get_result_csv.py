@@ -8,15 +8,23 @@ class GetResultCSV:
     整理並儲存瑕疵檢測的CSV
     """
 
-    def __init__(self, location: list, rate: list):
+    def __init__(self, location: list, rate: list, lang: bool):
         self.LabelName = GetLabelName()
         self.location = location
         self.rate = rate
-        self.column_name = ["種類", "位置", "比例"]
+        self.lang = lang
+        if self.lang:
+            self.column_name = ["種類", "位置", "比例"]
+            data = {
+                "種類": [], "位置": [], "比例": []
+            }
+        else:
+            self.column_name = ["Name", "Location", "Rate"]
+            data = {
+                "Name": [], "Location": [], "Rate": []
+            }
         self.saved_folder = 'reports/'
-        data = {
-            "種類": [], "位置": [], "比例": []
-        }
+
         self.csv_df = pd.DataFrame(data)
         self.get_result_csv()
 
@@ -28,11 +36,17 @@ class GetResultCSV:
         try:
             for defect, element in enumerate(self.location):
                 save_dict = {}
-                json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
-                                            for direct, _ in enumerate(self.location[defect]))
-                save_list = [self.LabelName.defect_name_en[element], json_defect_str, self.rate[element]]
+                if self.lang:
+                    json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
+                                                for direct, _ in enumerate(self.location[defect]))
+                    save_list = [self.LabelName.defect_name_zh[element], json_defect_str, self.rate[element]]
+                else:
+                    json_defect_str = ', '.join(GetLabelName.label_defect_direction_en[direct]
+                                                for direct, _ in enumerate(self.location[defect]))
+                    save_list = [self.LabelName.defect_name_en[element], json_defect_str, self.rate[element]]
                 for index, name in enumerate(self.column_name):
                     save_dict[name] = save_list[index]
+
                 self.csv_df = pd.concat([self.csv_df, pd.DataFrame([save_dict])], ignore_index=True)
         except Exception as e:
             print(repr(e))

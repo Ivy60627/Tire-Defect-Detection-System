@@ -15,7 +15,7 @@ from function.show_defect import ShowDefect
 from function.get_defect_rate import GetDefectRate
 from function.get_result_csv import GetResultCSV
 
-translate_to_zh_tw = True
+
 
 picture_path = './images/picture/'
 perspective_path = './images/transformation/'
@@ -36,13 +36,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__()
         self.ReadPartImage = ReadPartImage()
         self.ShowDefectLocation = ShowDefectLocation()
-
+        self.GetLabelName = GetLabelName()
         # initial UI structure
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.GetLabelName = GetLabelName()
         self.process_running = False
+        self.translate_to_zh_tw = False
         self.trans = QTranslator()
         self.setup_control()
 
@@ -54,26 +54,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ReadPartImage.ReadAllImageFinished.connect(self.display_all_img)
         self.ShowDefectLocation.ConvertMaskAreaFinished.connect(self.display_defect_location)
 
+        # connect buttons and actions when clicked
         self.ui.pushButton_reading_images.clicked.connect(self.button_reading_images)
         self.ui.pushButton_export_result.clicked.connect(self.button_export_clicked)
-
-        self.ui.actionChinese.triggered.connect(self.load_language)
+        self.ui.actionChinese.triggered.connect(self.load_language_zh)
         self.ui.actionEnglish.triggered.connect(self.load_language_en)
 
-    def load_language(self):
-        # 加載語言包、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
-        if translate_to_zh_tw:
-            self.trans.load("zh_TW")
-        else:
-            self.trans.load("en")
-        _app = QtWidgets.QApplication.instance()
-        _app.installTranslator(self.trans)
+
+
+    def load_language_zh(self):
+        # 讀取語言檔案後、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
+        self.translate_to_zh_tw = True
+        self.trans.load("zh_TW")
+        QtWidgets.QApplication.instance().installTranslator(self.trans)
         self.retranslateUi(self)
 
     def load_language_en(self):
-        # 加載語言包、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
-        _app = QtWidgets.QApplication.instance()
-        _app.removeTranslator(self.trans)
+        # 讀取語言檔案後、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
+        self.translate_to_zh_tw = False
+        QtWidgets.QApplication.instance().removeTranslator(self.trans)
         self.retranslateUi(self)
 
     def display_left_img(self):
@@ -103,9 +102,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
             if self.ShowDefectLocation.json_defect_location[defect]:
-                direction = GetLabelName.label_defect_direction_en
+                if self.translate_to_zh_tw:
+                    direction = GetLabelName.label_defect_direction_zh
+                else:
+                    direction = GetLabelName.label_defect_direction_en
                 location = self.ShowDefectLocation.json_defect_location
                 json_defect_str = ','.join(direction[direct] for direct in range(len(location[defect])))
+
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
                 exec(f'self.ui.{defect_location[element]}.setText(json_defect_str)')
                 exec(f'self.ui.{defect_rate[element]}.setText(str(self.ShowDefectLocation.defect_rate[element])+ "%")')
@@ -125,7 +128,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def button_export_clicked(self):
         try:
             GetResultCSV(self.ShowDefectLocation.json_defect_location,
-                         self.ShowDefectLocation.defect_rate)
+                         self.ShowDefectLocation.defect_rate,
+                         self.translate_to_zh_tw)
         except Exception as e:
             print("Can't Export the file now, try again later.")
 
