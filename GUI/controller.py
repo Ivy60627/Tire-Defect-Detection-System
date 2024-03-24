@@ -5,7 +5,7 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTranslator
 from PyQt5.QtWidgets import QApplication
 
-from UI import Ui_MainWindow
+from UI_1cam import Ui_MainWindow
 from function.RLE_to_mask_area import RLEtoMaskArea
 from function.get_label_name import GetLabelName
 from function.get_roi import GetROI

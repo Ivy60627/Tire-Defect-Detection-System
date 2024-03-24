@@ -31,15 +31,15 @@ class GetROI:
             self.img = cv2.imread(self.path + pic + '.png', )
 
             x1 = 2200
-            y1 = 200
-            x2 = 3910
-            y2 = 3160
+            y1 = 150
+            x2 = 3900
+            y2 = 3080
 
             # 求旋轉後的向量
             v = np.array([x1 - x2, y1 - y2])
             v2 = np.dot(self.rot, v)
 
-            x3 = [int(x2 + v2[0]), int(y2 + v2[1])]
+            x3 = [int(x2 + v2[0] - 50), int(y2 + v2[1])]
             if x3[1] > 4000:
                 x3[1] = 4000
 

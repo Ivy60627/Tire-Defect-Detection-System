@@ -71,8 +71,7 @@ for index, pic_list in enumerate(pic_list):
     # 取得圖像的高度和寬度
     (h, w) = img.shape[:2]
     # 計算圖像的中心點
-    #center = (3707,3197)
-    center = (3547,3896)
+    center = (3550,3855)
     # 取得旋轉矩陣
     M = cv2.getRotationMatrix2D(center, index*60, 1.0)
     cos=np.abs(M[0,0])
@@ -83,7 +82,7 @@ for index, pic_list in enumerate(pic_list):
     output = cv2.warpAffine(img, M, (nw, nh))
     output_Image.append(Image.fromarray(np.uint8(output)))
     end = time.time()
-    print("Finish rotate " + str(index + 1) + " picture(s), used " + str(end - start) +" seconds.")
+    print(f"Finish rotate {index + 1} picture(s), used{(end - start): .2f} seconds.")
     
 # 新開一張全白的畫布
 bg = Image.new('RGBA',(8000, 8000), '#FFFFFF')
