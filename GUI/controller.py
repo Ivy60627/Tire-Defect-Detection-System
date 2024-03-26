@@ -189,5 +189,4 @@ class ShowDefectLocation(QtCore.QThread):
         self.convertRLEToMaskArea.RLE_to_maskarea(self.json_list)
         self.json_defect_location = self.ShowDefect.show_defect(self.ShowDefect.read_json())
         self.defect_rate = self.GetDefectRate.get_defect_rate(self.GetDefectRate.read_json())
-        print(self.json_defect_location)
         self.ConvertMaskAreaFinished.emit()
