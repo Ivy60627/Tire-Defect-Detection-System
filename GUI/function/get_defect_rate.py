@@ -48,7 +48,7 @@ class GetDefectRate:
         for json_file in json_list:
             f = open(self.json_defect_file_path + json_file)
             data = json.load(f)
-            front = get_pixel_num()
+            front = get_pixel_num() * 6
 
             # check the masks exists
             if "maskarea" not in data:
