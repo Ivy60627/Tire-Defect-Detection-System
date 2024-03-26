@@ -15,8 +15,6 @@ from function.show_defect import ShowDefect
 from function.get_defect_rate import GetDefectRate
 from function.get_result_csv import GetResultCSV
 
-
-
 picture_path = './images/picture/'
 perspective_path = './images/transformation/'
 roi_path = './images/roi/'
@@ -60,19 +58,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ui.actionChinese.triggered.connect(self.load_language_zh)
         self.ui.actionEnglish.triggered.connect(self.load_language_en)
 
-
-
     def load_language_zh(self):
         # 讀取語言檔案後、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
         self.translate_to_zh_tw = True
         self.trans.load("zh_TW")
-        QtWidgets.QApplication.instance().installTranslator(self.trans)
+        QtWidgets.QApplication.instance(self).installTranslator(self.trans)
         self.retranslateUi(self)
 
     def load_language_en(self):
         # 讀取語言檔案後、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
         self.translate_to_zh_tw = False
-        QtWidgets.QApplication.instance().removeTranslator(self.trans)
+        QtWidgets.QApplication.instance(self).removeTranslator(self.trans)
         self.retranslateUi(self)
 
     def display_left_img(self):
@@ -100,20 +96,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         defect_rate = GetLabelName.label_defect_rate
         json_defect_str = ''
 
-
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
-            defect_list = []
             if self.ShowDefectLocation.json_defect_location[defect]:
                 if self.translate_to_zh_tw:
                     direction = GetLabelName.label_defect_direction_zh
                 else:
                     direction = GetLabelName.label_defect_direction_en
                 location = self.ShowDefectLocation.json_defect_location
-
-                for direct in location[defect]:
-                    defect_list.append(direction[direct-1])
-                json_defect_str = ','.join(defect_list)
-                # json_defect_str = ','.join(direction[direct] for direct in location[defect])
+                json_defect_str = ', '.join(direction[direct - 1] for direct in location[defect])
 
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
                 exec(f'self.ui.{defect_location[element]}.setText(json_defect_str)')
@@ -147,6 +137,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
+    """
+    Doing perspective transformation, getting ROI and store them in the select folder.
+    Collect the ROI images and connect them on the image and save.
+    """
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立讀取完畢的信號
     ReadAllImageFinished = QtCore.pyqtSignal()
     perspective_pic_list = []
@@ -165,12 +159,16 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         self.getROI.get_roi(self.pic_list)
         self.ReadPartImageFinished.emit()
 
-        # os.system(predict_script)  # 預測圖片
+        os.system(predict_script)  # 預測圖片
         self.pictureConnect.connect_picture(self.pic_list)
         self.ReadAllImageFinished.emit()
 
 
 class ShowDefectLocation(QtCore.QThread):
+    """
+    Convert predict label and calculate masks to their areas.
+    Store location data and rate and wait to send them to display_defect_location function.
+    """
     ConvertMaskAreaFinished = QtCore.pyqtSignal()  # 建立傳遞信號，傳遞型態為任意格式
 
     def __init__(self, parent=None):
@@ -184,5 +182,4 @@ class ShowDefectLocation(QtCore.QThread):
         self.convertRLEToMaskArea.RLE_to_maskarea(self.json_list)
         self.json_defect_location = self.ShowDefect.show_defect(self.ShowDefect.read_json())
         self.defect_rate = self.GetDefectRate.get_defect_rate(self.GetDefectRate.read_json())
-        print(self.json_defect_location)
         self.ConvertMaskAreaFinished.emit()
