@@ -107,7 +107,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 else:
                     direction = GetLabelName.label_defect_direction_en
                 location = self.ShowDefectLocation.json_defect_location
-                json_defect_str = ','.join(direction[direct] for direct in range(len(location[defect])))
+                json_defect_str = ', '.join(direction[direct - 1] for direct in location[defect])
+
+
+
 
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
                 exec(f'self.ui.{defect_location[element]}.setText(json_defect_str)')
@@ -141,6 +144,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
+    """
+    Doing perspective transformation, getting ROI and store them in the select folder.
+    Collect the ROI images and connect them on the image and save.
+    """
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立讀取完畢的信號
     ReadAllImageFinished = QtCore.pyqtSignal()
     perspective_pic_list = []
@@ -165,6 +172,10 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
 
 
 class ShowDefectLocation(QtCore.QThread):
+    """
+    Convert predict label and calculate masks to their areas.
+    Store location data and rate and wait to send them to display_defect_location function.
+    """
     ConvertMaskAreaFinished = QtCore.pyqtSignal()  # 建立傳遞信號，傳遞型態為任意格式
 
     def __init__(self, parent=None):
@@ -178,4 +189,5 @@ class ShowDefectLocation(QtCore.QThread):
         self.convertRLEToMaskArea.RLE_to_maskarea(self.json_list)
         self.json_defect_location = self.ShowDefect.show_defect(self.ShowDefect.read_json())
         self.defect_rate = self.GetDefectRate.get_defect_rate(self.GetDefectRate.read_json())
+        print(self.json_defect_location)
         self.ConvertMaskAreaFinished.emit()

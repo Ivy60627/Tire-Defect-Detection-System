@@ -36,5 +36,5 @@ class ShowDefect:
 
             label = list(set(data["labels"]))
             for defect_num in label:
-                defect[defect_num].append(json_file[6:7])
+                defect[defect_num].append(int(json_file[6:7]))
         return defect

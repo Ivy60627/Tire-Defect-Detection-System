@@ -15,8 +15,8 @@ class PerspectiveTransformation():
         self.pic_list = []
 
         # Define the transformation location of the image      
-        self.x_1 = 450
-        self.p1 = np.float32([[260, self.x_1], [260, 3000 - self.x_1], [3930, 0], [3930, 3000]])
+        self.x_1 = 250
+        self.p1 = np.float32([[500, self.x_1], [500, 3000 - self.x_1], [3550, 0], [3550, 3000]])
         self.x_2 = 15
         self.p2 = np.float32([[0, 0], [0, 3000], [4000, self.x_2], [4000, 3000 - self.x_2]])
 
