@@ -100,14 +100,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         defect_rate = GetLabelName.label_defect_rate
         json_defect_str = ''
 
+
         for defect, element in enumerate(self.ShowDefectLocation.json_defect_location):
+            defect_list = []
             if self.ShowDefectLocation.json_defect_location[defect]:
                 if self.translate_to_zh_tw:
                     direction = GetLabelName.label_defect_direction_zh
                 else:
                     direction = GetLabelName.label_defect_direction_en
                 location = self.ShowDefectLocation.json_defect_location
-                json_defect_str = ','.join(direction[direct] for direct in range(len(location[defect])))
+
+                for direct in location[defect]:
+                    defect_list.append(direction[direct-1])
+                json_defect_str = ','.join(defect_list)
+                # json_defect_str = ','.join(direction[direct] for direct in location[defect])
 
                 exec(f'self.ui.{defect_check[element]}.setText("Yes")')
                 exec(f'self.ui.{defect_location[element]}.setText(json_defect_str)')
@@ -159,7 +165,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         self.getROI.get_roi(self.pic_list)
         self.ReadPartImageFinished.emit()
 
-        os.system(predict_script)  # 預測圖片
+        # os.system(predict_script)  # 預測圖片
         self.pictureConnect.connect_picture(self.pic_list)
         self.ReadAllImageFinished.emit()
 
@@ -178,4 +184,5 @@ class ShowDefectLocation(QtCore.QThread):
         self.convertRLEToMaskArea.RLE_to_maskarea(self.json_list)
         self.json_defect_location = self.ShowDefect.show_defect(self.ShowDefect.read_json())
         self.defect_rate = self.GetDefectRate.get_defect_rate(self.GetDefectRate.read_json())
+        print(self.json_defect_location)
         self.ConvertMaskAreaFinished.emit()
