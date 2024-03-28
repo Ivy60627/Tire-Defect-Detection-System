@@ -6,29 +6,28 @@ import json
 from function.helper_function import read_json_list
 
 
+def find_indices(labels: list, value: int) -> list:
+    """
+    Get the index list of the specific elements
+    :labels: The label list
+    :value: The element that will get the indexes in labels list
+    :Return: return the list of indexes
+
+    example:
+    labels = [1, 2, 2, 3, 2, 3]
+    value = 2
+    return: [1, 2, 4]
+
+    """
+    return [index for index, element in enumerate(labels) if element == value]
+
+
 def add_masks(label_list, mask):
-    def find_indices(labels: list, value: int) -> list:
-        """
-        Get the index list of the specific elements
-        :labels: The label list
-        :value: The element that will get the indexes in labels list
-        :Return: return the list of indexes
-
-        example:
-        labels = [1, 2, 2, 3, 2, 3]
-        value = 2
-        return: [1, 2, 4]
-
-        """
-        return [index for index, element in enumerate(labels) if element == value]
-
     label_element_index_list = [find_indices(label_list, x) for x in set(label_list)]
-
     new_mask = []
     for index in label_element_index_list:
         element_masks_sum = sum([mask[x] for x in index])
         new_mask.append(element_masks_sum)
-
     return list(set(label_list)), new_mask
 
 
