@@ -27,7 +27,7 @@ class GetROI:
         return self.pic_list
 
     def get_roi(self, pic_list):
-        for pic in pic_list:
+        for pic in pic_list[:6]:
             self.img = cv2.imread(self.path + pic + '.png', )
 
             x1 = 2200

@@ -14,14 +14,14 @@ class GetResultCSV:
         self.rate = rate
         self.lang = lang
         if self.lang:
-            self.column_name = ["種類", "位置", "比例"]
+            self.column_name = ["種類", "位置", "比例(%)"]
             data = {
-                "種類": [], "位置": [], "比例": []
+                "種類": [], "位置": [], "比例(%)": []
             }
         else:
-            self.column_name = ["Name", "Location", "Rate"]
+            self.column_name = ["Name", "Location", "Rate(%)"]
             data = {
-                "Name": [], "Location": [], "Rate": []
+                "Name": [], "Location": [], "Rate(%)": []
             }
         self.saved_folder = 'reports/'
 
@@ -37,13 +37,14 @@ class GetResultCSV:
             for defect, element in enumerate(self.location):
                 save_dict = {}
                 if self.lang:
-                    json_defect_str = ', '.join(GetLabelName.label_defect_direction_zh[direct]
-                                                for direct, _ in enumerate(self.location[defect]))
+                    direction = GetLabelName.label_defect_direction_zh
+                    json_defect_str = ', '.join(direction[direct - 1] for direct in self.location[defect])
                     save_list = [self.LabelName.defect_name_zh[element], json_defect_str, self.rate[element]]
                 else:
-                    json_defect_str = ', '.join(GetLabelName.label_defect_direction_en[direct]
-                                                for direct, _ in enumerate(self.location[defect]))
+                    direction = GetLabelName.label_defect_direction_en
+                    json_defect_str = ', '.join(direction[direct - 1] for direct in self.location[defect])
                     save_list = [self.LabelName.defect_name_en[element], json_defect_str, self.rate[element]]
+
                 for index, name in enumerate(self.column_name):
                     save_dict[name] = save_list[index]
 
