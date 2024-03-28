@@ -1018,7 +1018,7 @@ class Ui_MainWindow(object):
         MainWindow.ui.label_rate.setText(_translate("MainWindow", "Defect\n"
                                                                   "Rate"))
         MainWindow.ui.groupBox_tire_all.setTitle(_translate("MainWindow", "Global Image"))
-        MainWindow.ui.menuMain.setTitle(_translate("MainWindow", "Main"))
+        MainWindow.ui.menuMain.setTitle(_translate("MainWindow", "Language"))
         MainWindow.ui.actionChinese.setText(_translate("MainWindow", "Chinese"))
         MainWindow.ui.actionEnglish.setText(_translate("MainWindow", "English"))
 
