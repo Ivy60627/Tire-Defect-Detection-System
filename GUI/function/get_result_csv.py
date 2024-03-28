@@ -8,7 +8,7 @@ class GetResultCSV:
     整理並儲存瑕疵檢測的CSV
     """
 
-    def __init__(self, location: list, rate: list, lang: bool):
+    def __init__(self, location: dict, rate: dict, lang: bool):
         self.LabelName = GetLabelName()
         self.location = location
         self.rate = rate
