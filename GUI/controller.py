@@ -6,19 +6,22 @@ from PyQt5.QtCore import QTranslator
 from UI import Ui_MainWindow
 from function.RLE_to_mask_area import RLE_to_mask_area
 from function.get_label_name import GetLabelName
-from function.get_roi import GetROI
-from function.perspective_transformation import PerspectiveTransformation
-from function.picture_connect import PictureConnect
+from function.get_roi import get_roi
+from function.perspective_transformation import transformation_image
+from function.picture_connect import connect_picture
 from function.show_defect import show_defect
 from function.get_defect_rate import get_defect_rate
 from function.get_result_csv import GetResultCSV
 from function.helper_function import *
 
-
+# All the paths the program used
 picture_path = './images/picture/'
 perspective_path = './images/transformation/'
 roi_path = './images/roi/'
 output_file_path = "./images/outputs"
+predict_path = './images/outputs/vis/'
+
+# The predict command
 predict_script = ("python network/image_demo.py images/roi network/config.py "
                   "--weights network/model.pth --out-dir images/outputs/")
 
@@ -58,7 +61,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ui.actionChinese.triggered.connect(self.load_language_zh)
         self.ui.actionEnglish.triggered.connect(self.load_language_en)
 
-
     def load_language_zh(self):
         # 讀取語言檔案後、獲取窗口實例、將翻譯安裝到實例中後翻譯界面
         self.translate_to_zh_tw = True
@@ -74,7 +76,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def display_left_img(self):
         label_left = GetLabelName.label_left
-        for index, pic in enumerate(self.ReadPartImage.pic_list):
+        for index, pic in enumerate(read_image_list(picture_path)):
             img_path = str(roi_path + pic) + '.png'
             img = cv2.imread(img_path)
             img = cv2.resize(img, (115, 115))
@@ -144,24 +146,19 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
     """
     ReadPartImageFinished = QtCore.pyqtSignal()  # 建立讀取完畢的信號
     ReadAllImageFinished = QtCore.pyqtSignal()
-    perspective_pic_list = []
 
     def __init__(self, parent=None):
         super().__init__()
-        self.perspectiveTransformation = PerspectiveTransformation(picture_path)
-        self.getROI = GetROI()
-        self.pic_list = read_image_list(picture_path)
-        self.pic_list = sorted(self.pic_list)
-        self.pictureConnect = PictureConnect()
 
     def run(self):
         # 進行圖片透視校正與擷取ROI，預測圖片後進行圖片拼接
-        self.perspectiveTransformation.transformation_image(self.pic_list)
-        self.getROI.get_roi(self.pic_list)
+        # left camera
+        transformation_image(picture_path, perspective_path)
+        get_roi(perspective_path, roi_path)
         self.ReadPartImageFinished.emit()
 
         # os.system(predict_script)  # 預測圖片
-        self.pictureConnect.connect_picture(self.pic_list)
+        connect_picture(predict_path)
         self.ReadAllImageFinished.emit()
 
 
