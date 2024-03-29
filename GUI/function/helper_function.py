@@ -5,8 +5,7 @@ def read_image_list(path: str) -> list:
     pic_list = []
     for root, dirs, files in os.walk(path):
         for file in files:
-            file = file.rstrip(".png")
-            pic_list.append(file)
+            pic_list.append(file.rstrip(".png"))
     return pic_list
 
 
