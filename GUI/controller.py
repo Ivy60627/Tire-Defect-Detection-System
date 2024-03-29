@@ -51,7 +51,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.ui.pushButton_translate.click()
 
     def setup_control(self):  # 啟動時預載入函式，連結顯示用訊號
-        self.ReadPartImage.ReadPartImageFinished.connect(self.display_area_img)
+        self.ReadPartImage.ReadPartImageFinished.connect(self.display_left_img)
         self.ReadPartImage.ReadAllImageFinished.connect(self.display_all_img)
         self.ShowDefectLocation.ConvertMaskAreaFinished.connect(self.display_defect_location)
 
@@ -74,20 +74,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QApplication.instance().removeTranslator(self.trans)
         self.retranslateUi(self)
 
-    def display_area_img(self):
-        self.display_img("left")
-
-    def display_img(self, direction: str):
-        if direction == "left":
-            label = GetLabelName.label_left
-        else:
-            label = GetLabelName.label_right
-        for index, pic in enumerate(read_image_list(f"{picture_path}{direction}/")):
-            img = cv2.imread(f"{roi_path}{direction}/{pic}.png")
+    def display_left_img(self):
+        label_left = GetLabelName.label_left
+        for index, pic in enumerate(self.ReadPartImage.pic_list):
+            img_path = str(roi_path + pic) + '.png'
+            img = cv2.imread(img_path)
             img = cv2.resize(img, (115, 115))
             height, width, channel = img.shape
             qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
-            exec(f'self.ui.{label[index]}.setPixmap(QPixmap.fromImage(qimg))')
+            exec(f'self.ui.{label_left[index]}.setPixmap(QPixmap.fromImage(qimg))')
+
 
     def display_all_img(self):
         img_path = 'connect_output.png'
