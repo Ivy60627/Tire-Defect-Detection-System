@@ -51,7 +51,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.ui.pushButton_translate.click()
 
     def setup_control(self):  # 啟動時預載入函式，連結顯示用訊號
-        self.ReadPartImage.ReadPartImageFinished.connect(self.display_left_img)
+        self.ReadPartImage.ReadPartImageFinished.connect(self.display_area_img)
         self.ReadPartImage.ReadAllImageFinished.connect(self.display_all_img)
         self.ShowDefectLocation.ConvertMaskAreaFinished.connect(self.display_defect_location)
 
@@ -74,15 +74,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QApplication.instance().removeTranslator(self.trans)
         self.retranslateUi(self)
 
-    def display_left_img(self):
-        label_left = GetLabelName.label_left
-        for index, pic in enumerate(read_image_list(picture_path)):
-            img_path = str(roi_path + pic) + '.png'
-            img = cv2.imread(img_path)
+    def display_area_img(self):
+        self.display_img("left")
+        self.display_img("right")
+
+    def display_img(self, direction: str):
+        if direction == "left":
+            label = GetLabelName.label_left
+        else:
+            label = GetLabelName.label_right
+        for index, pic in enumerate(read_image_list(f"{picture_path}{direction}/")):
+            img = cv2.imread(f"{roi_path}{direction}/{pic}.png")
             img = cv2.resize(img, (115, 115))
             height, width, channel = img.shape
             qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
-            exec(f'self.ui.{label_left[index]}.setPixmap(QPixmap.fromImage(qimg))')
+            exec(f'self.ui.{label[index]}.setPixmap(QPixmap.fromImage(qimg))')
 
     def display_all_img(self):
         img_path = 'connect_output.png'
@@ -153,8 +159,11 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
     def run(self):
         # 進行圖片透視校正與擷取ROI，預測圖片後進行圖片拼接
         # left camera
-        transformation_image(picture_path, perspective_path)
-        get_roi(perspective_path, roi_path)
+        transformation_image(f"{picture_path}left/", f"{perspective_path}left/")
+        get_roi(f"{perspective_path}left/", f"{roi_path}left/")
+        # right camera
+        transformation_image(f"{picture_path}right/", f"{perspective_path}right/")
+        get_roi(f"{perspective_path}right/", f"{roi_path}right/")
         self.ReadPartImageFinished.emit()
 
         # os.system(predict_script)  # 預測圖片
@@ -177,5 +186,5 @@ class ShowDefectLocation(QtCore.QThread):
                          f"{output_file_path}/areas/")
         self.dict_defect_location = show_defect(f"{output_file_path}/areas/")
         self.defect_rate = get_defect_rate(f"{output_file_path}/areas/",
-                                           roi_path)
+                                           f"{roi_path}left/")
         self.ConvertMaskAreaFinished.emit()
