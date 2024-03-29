@@ -3,7 +3,7 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTranslator
 
-from UI import Ui_MainWindow
+from UI_1cam import Ui_MainWindow
 from function.RLE_to_mask_area import RLE_to_mask_area
 from function.get_label_name import GetLabelName
 from function.get_roi import get_roi
@@ -76,7 +76,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def display_area_img(self):
         self.display_img("left")
-        self.display_img("right")
 
     def display_img(self, direction: str):
         if direction == "left":
@@ -161,10 +160,6 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         # left camera
         transformation_image(f"{picture_path}left/", f"{perspective_path}left/")
         get_roi(f"{perspective_path}left/", f"{roi_path}left/")
-        # right camera
-        transformation_image(f"{picture_path}right/", f"{perspective_path}right/")
-        get_roi(f"{perspective_path}right/", f"{roi_path}right/")
-        self.ReadPartImageFinished.emit()
 
         # os.system(predict_script)  # 預測圖片
         connect_picture(predict_path)
