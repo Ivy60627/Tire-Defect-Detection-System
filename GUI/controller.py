@@ -155,6 +155,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         # left camera
         transformation_image(f"{picture_path}left/", f"{perspective_path}left/")
         get_roi(f"{perspective_path}left/", f"{roi_path}left/")
+        self.ReadPartImageFinished.emit()
 
         # os.system(predict_script)  # 預測圖片
         connect_picture(predict_path)
