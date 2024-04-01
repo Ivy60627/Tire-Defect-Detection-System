@@ -76,9 +76,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def display_left_img(self):
         label_left = GetLabelName.label_left
-        for index, pic in enumerate(self.ReadPartImage.pic_list):
-            img_path = str(roi_path + pic) + '.png'
-            img = cv2.imread(img_path)
+        for index, pic in enumerate(read_image_list(f"{picture_path}left/")):
+            img = cv2.imread(f"{roi_path}left/{pic}.png")
             img = cv2.resize(img, (115, 115))
             height, width, channel = img.shape
             qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
