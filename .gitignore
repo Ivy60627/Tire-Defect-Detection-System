@@ -2,3 +2,5 @@
 GUI/network/model.pth
 *.png
 *.pyc
+*.json
+*.csv
