@@ -24,10 +24,10 @@ for pic in pic_list[:6]:
     img = cv2.imread(path +  pic + '.png',)     
     
 
-    x1 = 2200
-    y1 = 150
-    x2 = 3900
-    y2 = 3080
+    x1 = 2180 #調整左右
+    y1 = 0    #調整上下
+    x2 = x1 + 1700
+    y2 = y1 + 2930
     
     # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
     # cv2.imshow('image',img)

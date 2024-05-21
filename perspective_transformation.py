@@ -9,8 +9,8 @@ def show_xy(event,x,y,flags,userdata):
 
 # [x,y]      
 x_1 = 250 #影響左側的上下
-p1 = np.float32([[500, x_1], [500, 3000 - x_1], [3550, 0], [3550, 3000]]) #3550影響左右
-x_2 = 15
+p1 = np.float32([[400, x_1], [400, 3000 - x_1], [3850, 0], [3850, 3000]]) #3550影響左右 //下次從400開始扣
+x_2 = 0
 p2 = np.float32([[0, 0], [0, 3000], [4000, x_2], [4000, 3000 - x_2]])
 
 m = cv2.getPerspectiveTransform(p1, p2)
@@ -26,9 +26,9 @@ for root,dirs,files in os.walk(path):
 for pic in pic_list[:6]:
     img = cv2.imread(path +  pic + '.png',)    
     
-    # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
-    # cv2.imshow('image',img)
-    # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
+    cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
+    cv2.imshow('image',img)
+    cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
     
     output = cv2.warpPerspective(img, m, (4000, 4000))
     
