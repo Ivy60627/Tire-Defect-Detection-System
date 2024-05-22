@@ -6,3 +6,6 @@ GUI/network/model.pth
 *.json
 *.csv
 /GUI/__pycache__
+*.png
+*.pyc
+*.xml
