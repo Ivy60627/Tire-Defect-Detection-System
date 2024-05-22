@@ -9,3 +9,4 @@ GUI/network/model.pth
 *.csv
 /GUI/__pycache__
 >>>>>>> Stashed changes
+*.pyc

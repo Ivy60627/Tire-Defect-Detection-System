@@ -13,6 +13,7 @@ from function.show_defect import show_defect
 from function.get_defect_rate import get_defect_rate
 from function.get_result_csv import GetResultCSV
 from function.helper_function import *
+from function.create_folder import *
 
 # All the paths the program used
 picture_path = './images/picture/'
@@ -22,7 +23,7 @@ output_file_path = "./images/outputs"
 predict_path = './images/outputs/vis/'
 
 # The predict command
-predict_script = ("python network/image_demo.py images/roi network/config.py "
+predict_script = ("python network/image_demo.py images/roi/left network/config.py "
                   "--weights network/model.pth --out-dir images/outputs/")
 
 
@@ -44,6 +45,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.process_running = False
         self.translate_to_zh_tw = False
+        remove_folder()
+        create_folder()
         self.trans = QTranslator()
         self.setup_control()
 
@@ -166,7 +169,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         get_roi(f"{perspective_path}right/", f"{roi_path}right/")
         self.ReadPartImageFinished.emit()
 
-        # os.system(predict_script)  # 預測圖片
+        os.system(predict_script)  # 預測圖片
         connect_picture(predict_path)
         self.ReadAllImageFinished.emit()
 
