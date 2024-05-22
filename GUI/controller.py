@@ -13,6 +13,7 @@ from function.show_defect import show_defect
 from function.get_defect_rate import get_defect_rate
 from function.get_result_csv import GetResultCSV
 from function.helper_function import *
+from function.create_folder import *
 
 # All the paths the program used
 picture_path = './images/picture/'
@@ -45,6 +46,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.process_running = False
         self.translate_to_zh_tw = False
         self.trans = QTranslator()
+        remove_folder()
+        create_folder()
         self.setup_control()
 
         # Debug option, remember to remove this
