@@ -4,3 +4,12 @@ GUI/network/model.pth
 *.pyc
 *.json
 *.csv
+<<<<<<< Updated upstream
+=======
+/GUI/__pycache__
+*.png
+*.pyc
+*.xml
+*.pyc
+/GUI/__pycache__
+>>>>>>> Stashed changes
