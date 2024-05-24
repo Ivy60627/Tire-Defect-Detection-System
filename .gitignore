@@ -9,3 +9,4 @@ GUI/network/model.pth
 *.png
 *.pyc
 *.xml
+*.iml

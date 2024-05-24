@@ -6,6 +6,8 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from UI import Ui_MainWindow
 from create_folder import create_folder
 
+path = '../GUI/images/picture'
+
 
 class Camera(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 Camera 類別
     rawdata = QtCore.pyqtSignal(np.ndarray)  # 建立傳遞信號，需設定傳遞型態為 np.ndarray
@@ -20,11 +22,11 @@ class Camera(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 Camera 類別
         """
         # 將父類初始化
         super().__init__(parent)
-        self.cam = cv2.VideoCapture(camera_num)
+        self.cam = cv2.VideoCapture(camera_num, cv2.CAP_DSHOW)
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 4000)
         self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 3000)
-        # self.cam.set(cv2.CAP_PROP_FPS, 2)
-        # self.fps = 0
+        self.save_image_bool = False
+        self.img_num = 0
         # 判斷攝影機是否正常連接
         if self.cam is None or not self.cam.isOpened():
             self.connect = False
@@ -41,26 +43,17 @@ class Camera(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 Camera 類別
         while self.running and self.connect:
             ret, img = self.cam.read()  # 讀取影像
             frame_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            frame_resized = cv2.resize(frame_rgb, (width, height))
+            frame_rgb_flip = cv2.flip(frame_rgb, 0)
+            frame_resized = cv2.resize(frame_rgb_flip, (width, height))
+            if self.save_image_bool:
+                self.save_image(frame_rgb_flip)
 
-            self.rawdata.emit(img)  # 發送影像
-            # else:    # 例外處理
-            #    print("Warning!!!")
-            #    self.connect = False
+            self.rawdata.emit(frame_resized)  # 發送影像
 
-            # self.fps = self.fps + 1
-            # if self.fps == 3:
-            #     self.fps = 0
-
-    def open(self):
-        """ 開啟攝影機影像讀取功能 """
+    def open_stop(self):
+        """ 切換攝影機影像讀取功能 """
         if self.connect:
-            self.running = True  # 啟動讀取狀態
-
-    def stop(self):
-        """ 暫停攝影機影像讀取功能 """
-        if self.connect:
-            self.running = False  # 關閉讀取狀態
+            self.running = ~self.running  # 切換讀取狀態
 
     def close(self):
         """ 關閉攝影機功能 """
@@ -68,6 +61,15 @@ class Camera(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 Camera 類別
             self.running = False  # 關閉讀取狀態
             time.sleep(1)
             self.cam.release()  # 釋放攝影機
+
+    def save_image(self, img):
+        if self.img_num < 6:
+            self.img_num += 1
+        else:
+            self.img_num == 1
+        cv2.imwrite(f'{path}/left/image_{self.img_num}.png', img)
+        print(f'Save Image at {path}/left/image_{self.img_num}.png')
+        self.save_image_bool = False
 
 
 class MainWindow_controller(QtWidgets.QMainWindow):
@@ -78,12 +80,13 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         create_folder()
         self.setup_control()
 
+
         # 設定相機功能
         self.ProcessCamLeft = Camera(camera_num=0)  # 建立相機物件
-        self.ProcessCamRight = Camera(camera_num=1)  # 建立相機物件
+        #self.ProcessCamRight = Camera(camera_num=1)  # 建立相機物件
         if self.ProcessCamLeft.connect:
             # 連接影像訊號 (rawdata) 至 getRaw()
-            self.ProcessCamLeft.rawdata.connect(self.getRaw)  # 槽功能：取得並顯示影像
+            self.ProcessCamLeft.rawdata.connect(self.get_raw)  # 槽功能：取得並顯示影像
             self.ui.pushButton_left_open.setEnabled(True)  # 攝影機啟動按鈕的狀態：ON
         else:
             self.ui.pushButton_left_open.setEnabled(False)  # 攝影機啟動按鈕的狀態：OFF
@@ -91,32 +94,38 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
     def setup_control(self):
         # 連接按鍵
-        self.ui.pushButton_left_open.clicked.connect(self.openCam)  # 槽功能：開啟攝影機
-        self.ui.pushButton_left_close.clicked.connect(self.stopCam)  # 槽功能：暫停讀取影像
+        self.ui.pushButton_left_open.clicked.connect(self.open_cam)  # 槽功能：開啟攝影機
+        self.ui.pushButton_left_close.clicked.connect(self.stop_cam)  # 槽功能：暫停讀取影像
+        self.ui.pushButton_left_save.clicked.connect(self.save_image)
 
-    def getRaw(self, data):  # 取得影像  # data 為接收到的影像
-        self.showData(data)  # 將影像傳入至 showData()
+    def get_raw(self, data):  # 取得影像  # data 為接收到的影像
+        self.show_data(data)  # 將影像傳入至 showData()
 
-    def openCam(self):
+    def save_image(self, data):  # 取得影像  # data 為接收到的影像
+        self.ProcessCamLeft.save_image_bool = True  # 將影像傳入至 showData()
+    def open_cam(self):
         """ 啟動攝影機的影像讀取 """
         if self.ProcessCamLeft.connect:  # 判斷攝影機是否可用
-            self.ProcessCamLeft.open()  # 影像讀取功能開啟
+            self.ProcessCamLeft.open_stop()  # 影像讀取功能開啟
             self.ProcessCamLeft.start()  # 在子緒啟動影像讀取
             # 按鈕的狀態：啟動 OFF、暫停 ON、視窗大小 ON
             self.ui.pushButton_left_open.setEnabled(False)
             self.ui.pushButton_left_close.setEnabled(True)
 
-    def stopCam(self):
+    def stop_cam(self):
         """ 凍結攝影機的影像 """
         if self.ProcessCamLeft.connect:  # 判斷攝影機是否可用
-            self.ProcessCamLeft.stop()  # 影像讀取功能關閉
+            self.ProcessCamLeft.open_stop()  # 影像讀取功能關閉
             # 按鈕的狀態：啟動 ON、暫停 OFF、視窗大小 OFF
             self.ui.pushButton_left_open.setEnabled(True)
             self.ui.pushButton_left_close.setEnabled(False)
 
-    def showData(self, img):
+    def show_data(self, img):
         """ 顯示攝影機的影像 """
-        height, width, _ = img.shape  # 取得影像尺寸
-        qimg = QtGui.QImage(img.data, height, width, QtGui.QImage.Format_RGB888).rgbSwapped()
+        height, width, channel = img.shape  # 取得影像尺寸
+        bytesPerline = channel * width
+        qimg = QtGui.QImage(img.data, width, height, bytesPerline, QtGui.QImage.Format_RGB888).rgbSwapped()
         self.ui.label_camera_left.setScaledContents(True)  # 尺度可變
         self.ui.label_camera_left.setPixmap(QtGui.QPixmap.fromImage(qimg))
+
+
