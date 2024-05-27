@@ -1,12 +1,19 @@
 import time
 import cv2
 import numpy as np
+import imagingcontrol4 as ic4
 from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtWidgets import QWidget
 
 from UI import Ui_MainWindow
 from create_folder import create_folder
 
 path = '../GUI/images/picture'
+
+
+def _window_handle(wnd: QWidget) -> int:
+    # Helper function to get window handle from a QWidget
+    return wnd.winId().__int__()
 
 
 class Camera(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 Camera 類別
@@ -22,33 +29,34 @@ class Camera(QtCore.QThread):  # 繼承 QtCore.QThread 來建立 Camera 類別
         """
         # 將父類初始化
         super().__init__(parent)
-        self.cam = cv2.VideoCapture(camera_num, cv2.CAP_DSHOW)
-        self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 4000)
-        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 3000)
-        self.save_image_bool = False
-        self.img_num = 0
-        # 判斷攝影機是否正常連接
-        if self.cam is None or not self.cam.isOpened():
-            self.connect = False
-            self.running = False
-        else:
-            self.connect = True
-            self.running = False
+
+        # self.cam = cv2.VideoCapture(camera_num, cv2.CAP_DSHOW)
+        # self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 4000)
+        # self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 3000)
+        # self.save_image_bool = False
+        # self.img_num = 0
+        # # 判斷攝影機是否正常連接
+        # if self.cam is None or not self.cam.isOpened():
+        #     self.connect = False
+        #     self.running = False
+        # else:
+        #     self.connect = True
+        #     self.running = False
 
     def run(self):
         """ 執行多執行緒 - 讀取影像 - 發送影像 - 簡易異常處理 """
-        width = 440
-        height = 330
-        # 當正常連接攝影機才能進入迴圈
-        while self.running and self.connect:
-            ret, img = self.cam.read()  # 讀取影像
-            frame_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            frame_rgb_flip = cv2.flip(frame_rgb, 0)
-            frame_resized = cv2.resize(frame_rgb_flip, (width, height))
-            if self.save_image_bool:
-                self.save_image(frame_rgb_flip)
+        # width = 440
+        # height = 330
+        # # 當正常連接攝影機才能進入迴圈
+        # while self.running and self.connect:
+        #     ret, img = self.cam.read()  # 讀取影像
+        #     frame_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        #     frame_rgb_flip = cv2.flip(frame_rgb, 0)
+        #     frame_resized = cv2.resize(frame_rgb_flip, (width, height))
+        #     if self.save_image_bool:
+        #         self.save_image(frame_rgb_flip)
 
-            self.rawdata.emit(frame_resized)  # 發送影像
+            # self.rawdata.emit(frame_resized)  # 發送影像
 
     def open_stop(self):
         """ 切換攝影機影像讀取功能 """
@@ -79,18 +87,49 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         create_folder()
         self.setup_control()
+        self.img_num=0
+        ic4.Library.init()
+        # Create a Grabber object
+        self.grabber = ic4.Grabber()
 
 
-        # 設定相機功能
-        self.ProcessCamLeft = Camera(camera_num=0)  # 建立相機物件
-        #self.ProcessCamRight = Camera(camera_num=1)  # 建立相機物件
-        if self.ProcessCamLeft.connect:
-            # 連接影像訊號 (rawdata) 至 getRaw()
-            self.ProcessCamLeft.rawdata.connect(self.get_raw)  # 槽功能：取得並顯示影像
-            self.ui.pushButton_left_open.setEnabled(True)  # 攝影機啟動按鈕的狀態：ON
-        else:
-            self.ui.pushButton_left_open.setEnabled(False)  # 攝影機啟動按鈕的狀態：OFF
-        self.ui.pushButton_left_close.setEnabled(False)  # 攝影機的其他功能狀態：OFF
+        # Show the builtin dialog to let the user select a device
+        # If the user selects a device, the function opens it in the grabber object
+        # if not ic4.Dialogs.grabber_select_device(self.grabber, _window_handle(self)):
+        #     return
+        first_device_info = ic4.DeviceEnum.devices()[0]
+        self.grabber.device_open(first_device_info)
+
+        # Create an IC4 EmbeddedDisplay that is using video_widget from above as presentation area
+        #display = ic4.FloatingDisplay()
+        video_widget = self.ui.label_camera_left
+        display = ic4.EmbeddedDisplay(_window_handle(video_widget))
+        # Configure the display to neatly stretch and center the live image
+        display.set_render_position(ic4.DisplayRenderPosition.STRETCH_CENTER)
+        try:
+            self.grabber.device_property_map.set_value(ic4.PropId.USER_SET_SELECTOR, "Default")
+            self.grabber.device_property_map.execute_command(ic4.PropId.USER_SET_LOAD)
+        except ic4.IC4Exception:
+            # The driver/device might not support this, ignore and move on
+            pass
+
+        # Create a SnapSink. A SnapSink allows grabbing single images (or image sequences) out of a data stream.
+        self.sink = ic4.SnapSink()
+        # Start a data stream from the device to the display
+        self.grabber.stream_setup(self.sink, display)
+
+
+        # # 設定相機功能
+        # self.ProcessCamLeft = Camera(camera_num=0)  # 建立相機物件
+        # #self.ProcessCamRight = Camera(camera_num=1)  # 建立相機物件
+        # if self.ProcessCamLeft.connect:
+        #     # 連接影像訊號 (rawdata) 至 getRaw()
+        #     self.ProcessCamLeft.rawdata.connect(self.get_raw)  # 槽功能：取得並顯示影像
+        #     self.ui.pushButton_left_open.setEnabled(True)  # 攝影機啟動按鈕的狀態：ON
+        # else:
+        #     self.ui.pushButton_left_open.setEnabled(False)  # 攝影機啟動按鈕的狀態：OFF
+        # self.ui.pushButton_left_close.setEnabled(False)  # 攝影機的其他功能狀態：OFF
+
 
     def setup_control(self):
         # 連接按鍵
@@ -102,7 +141,23 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.show_data(data)  # 將影像傳入至 showData()
 
     def save_image(self, data):  # 取得影像  # data 為接收到的影像
-        self.ProcessCamLeft.save_image_bool = True  # 將影像傳入至 showData()
+        #self.ProcessCamLeft.save_image_bool = True  # 將影像傳入至 showData()
+        try:
+            # Grab a single image out of the data stream.
+            image = self.sink.snap_single(10000)
+            # Print image information.
+            print(f"Received an image. ImageType: {image.image_type}")
+            # Save the image.
+            if self.img_num < 6:
+                self.img_num += 1
+            else:
+                self.img_num == 1
+            image.save_as_png(f'{path}/left/image_{self.img_num}.png')
+            print(f'Save Image at {path}/left/image_{self.img_num}.png')
+            #image.save_as_png("test.png")
+        except ic4.IC4Exception as ex:
+            print(ex.message)
+
     def open_cam(self):
         """ 啟動攝影機的影像讀取 """
         if self.ProcessCamLeft.connect:  # 判斷攝影機是否可用
@@ -127,5 +182,3 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         qimg = QtGui.QImage(img.data, width, height, bytesPerline, QtGui.QImage.Format_RGB888).rgbSwapped()
         self.ui.label_camera_left.setScaledContents(True)  # 尺度可變
         self.ui.label_camera_left.setPixmap(QtGui.QPixmap.fromImage(qimg))
-
-
