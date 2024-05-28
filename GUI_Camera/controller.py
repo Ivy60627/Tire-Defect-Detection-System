@@ -75,6 +75,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.img_num = 0
         self.camera_test()
 
+
         # if self.ProcessCamLeft.connect:
         #     # 連接影像訊號 (rawdata) 至 getRaw()
         #     self.ProcessCamLeft.rawdata.connect(self.get_raw)  # 槽功能：取得並顯示影像
@@ -84,6 +85,42 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         # self.ui.pushButton_left_close.setEnabled(False)  # 攝影機的其他功能狀態：OFF
 
     def camera_test(self):
+
+        def create_display(pos: str):
+            if pos == 'left':
+                first_device_info = ic4.DeviceEnum.devices()[0]
+                camera_pos = self.ui.label_camera_left
+            else:
+                first_device_info = ic4.DeviceEnum.devices()[1]
+                camera_pos = self.ui.label_camera_right
+
+            # Create a Grabber object
+            grab = ic4.Grabber()
+            grab.device_open(first_device_info)
+
+            # Create an IC4 EmbeddedDisplay that is using video_widget from above as presentation area
+            display = ic4.EmbeddedDisplay(_window_handle(camera_pos))
+
+            # Configure the display to neatly stretch and center the live image
+            display.set_render_position(ic4.DisplayRenderPosition.STRETCH_CENTER)
+
+            try:
+                grab.device_property_map.set_value(ic4.PropId.USER_SET_SELECTOR, "Default")
+                grab.device_property_map.execute_command(ic4.PropId.USER_SET_LOAD)
+            except ic4.IC4Exception:
+                # The driver/device might not support this, ignore and move on
+                pass
+
+            # Create a SnapSink. A SnapSink allows grabbing single images (or image sequences) out of a data stream.
+            sink = ic4.SnapSink()
+            # Start a data stream from the device to the display
+            grab.stream_setup(sink, display)
+
+        create_display('left')
+        create_display('right')
+
+
+    def camera_test_old(self):
         # Create a Grabber object
         self.grabber = ic4.Grabber()
         self.grabber2 = ic4.Grabber()
@@ -112,6 +149,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         # Start a data stream from the device to the display
         self.grabber.stream_setup(self.sink, display)
         self.grabber2.stream_setup(self.sink2, display2)
+
 
 
     def setup_control(self):
@@ -153,11 +191,14 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
     def stop_cam(self):
         """ 凍結攝影機的影像 """
-        if self.ProcessCamLeft.connect:  # 判斷攝影機是否可用
-            self.ProcessCamLeft.open_stop()  # 影像讀取功能關閉
+        self.grabber.stream_stop()
+        self.ui.pushButton_left_open.setEnabled(True)
+        self.ui.pushButton_left_close.setEnabled(False)
+        #if self.ProcessCamLeft.connect:  # 判斷攝影機是否可用
+            #self.ProcessCamLeft.open_stop()  # 影像讀取功能關閉
             # 按鈕的狀態：啟動 ON、暫停 OFF、視窗大小 OFF
-            self.ui.pushButton_left_open.setEnabled(True)
-            self.ui.pushButton_left_close.setEnabled(False)
+
+
 
     def show_data(self, img):
         """ 顯示攝影機的影像 """
