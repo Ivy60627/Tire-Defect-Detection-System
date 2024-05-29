@@ -165,7 +165,7 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         transformation_image(f"{picture_path}left/", f"{perspective_path}left/")
         get_roi(f"{perspective_path}left/", f"{roi_path}left/")
         # right camera
-        transformation_image(f"{picture_path}right/", f"{perspective_path}right/")
+        transformation_image(f"{picture_path}right/", f"{perspective_path}right/", flip_vertical=True)
         get_roi(f"{perspective_path}right/", f"{roi_path}right/")
         self.ReadPartImageFinished.emit()
 
