@@ -95,7 +95,8 @@ class MainWindow_controller(QtWidgets.QMainWindow):
                 else:
                     self.img_num_left = 1
                 image.save_as_png(f'{path}/{location}/image_{self.img_num_left}.png')
-                print(f'Save Image at {path}/{location}/image_{self.img_num_left}.png')
+                self.ui.label_logs_left.setText(f"Saved at {location}/image_{self.img_num_left}.png")
+                print(f'Saved Image at {path}/{location}/image_{self.img_num_left}.png')
             else:
                 image = self.sink_r.snap_single(2000)
                 # Print image information.
@@ -105,7 +106,8 @@ class MainWindow_controller(QtWidgets.QMainWindow):
                 else:
                     self.img_num_right = 1
                 image.save_as_png(f'{path}/{location}/image_{self.img_num_right}.png')
-                print(f'Save Image at {path}/{location}/image_{self.img_num_right}.png')
+                self.ui.label_logs_right.setText(f"Saved at {location}/image_{self.img_num_right}.png")
+                print(f'Saved Image at {path}/{location}/image_{self.img_num_right}.png')
 
         except ic4.IC4Exception as ex:
             print(ex.message)
