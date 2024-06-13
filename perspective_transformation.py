@@ -7,15 +7,16 @@ def show_xy(event,x,y,flags,userdata):
     if (event != 0):
         print(event,x,y,flags)
 
-# [x,y]      
-x_1 = 450 
-p1 = np.float32([[260, x_1], [260, 3000 - x_1], [3930, 0], [3930, 3000]])
-x_2 = 15
-p2 = np.float32([[0, 0], [0, 3000], [4000, x_2], [4000, 3000 - x_2]])
+# [x,y]
+a_1 = 500   # 影響左側的上下
+a_2 = 700   # 影響左側的左右
+a_3 = 3750  # 影響右側的左右
+p1 = np.float32([[a_2, a_1], [a_2, 3000 - a_1], [a_3, 0], [a_3, 3000]])
 
-# old
-# p1 = np.float32([[400,200],[3600,200], [3,2536], [3997,2536]])
-# p2 = np.float32([[100,0], [3900,0], [453,3650], [3557,3650]])
+b_1 = 0
+b_2 = 0 #影響右側的上下
+p2 = np.float32([[b_1, 0], [b_1, 3000], [4000, b_2], [4000, 3000 - b_2]])
+
 m = cv2.getPerspectiveTransform(p1, p2)
 
 path = './picture/'
@@ -26,7 +27,7 @@ for root,dirs,files in os.walk(path):
 		file=file.rstrip(".png")
 		pic_list.append(file)
         
-for pic in pic_list:
+for pic in pic_list[:6]:
     img = cv2.imread(path +  pic + '.png',)    
     
     # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
@@ -47,8 +48,8 @@ for pic in pic_list:
     plt.xticks([]), plt.yticks([])
     plt.title('output')
     
-    #cv2.namedWindow('image2', cv2.WINDOW_KEEPRATIO)
-    #cv2.imshow('image2', output)
+    # cv2.namedWindow('image2', cv2.WINDOW_KEEPRATIO)
+    # cv2.imshow('image2', output)
     cv2.imwrite('transformation\\' + pic + '_t.png', output)
     
     cv2.waitKey(0)
