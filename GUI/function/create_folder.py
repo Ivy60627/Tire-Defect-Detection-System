@@ -1,10 +1,8 @@
 import os, shutil
 
-paths = ['images/picture', 'images/picture/left', 'images/picture/right',
-         'images/roi', 'images/roi/left', 'images/roi/right',
+paths = ['images/roi', 'images/roi/left', 'images/roi/right',
          'images/transformation', 'images/transformation/left', 'images/transformation/right',
-         'images/outputs', 'images/outputs/areas',
-         'reports']
+         'images/outputs', 'images/outputs/areas', 'reports']
 
 
 def remove_folder():
