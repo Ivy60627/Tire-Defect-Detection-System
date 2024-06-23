@@ -54,7 +54,7 @@ def connect_picture(pic_path: str):
         # 取得圖像的高度和寬度
         (h, w) = img.shape[:2]
         # 計算圖像的中心點
-        center = (3550, 3855)
+        center = (1350 + 2420, 3703)
         # 取得旋轉矩陣
         matrix = cv2.getRotationMatrix2D(center, index * 60, 1.0)
         cos = np.abs(matrix[0, 0])
