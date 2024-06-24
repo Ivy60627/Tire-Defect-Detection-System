@@ -54,7 +54,7 @@ def connect_picture(pic_path: str):
         # 取得圖像的高度和寬度
         (h, w) = img.shape[:2]
         # 計算圖像的中心點
-        center = (1350 + 2420, 3703)
+        center = (1150 + 2420, 3703)
         # 取得旋轉矩陣
         matrix = cv2.getRotationMatrix2D(center, index * 60, 1.0)
         cos = np.abs(matrix[0, 0])
@@ -78,6 +78,6 @@ def connect_picture(pic_path: str):
     # 轉換為cv2格式
     bg = cv2.cvtColor(np.asarray(bg), cv2.COLOR_RGBA2BGRA)
     # 裁切圖片 [上下, 左右]
-    bg = bg[1450:7800, 550:7700]
+    bg = bg[1450:7600, 1000:7150]
     cv2.imwrite('connect_output.png', bg)
     return bg

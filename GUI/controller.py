@@ -90,7 +90,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def display_all_img(self):
         img_path = 'connect_output.png'
         img = cv2.imread(img_path)
-        img = cv2.resize(img, (450, 450))
+        img = cv2.resize(img, (410, 410))
         height, width, channel = img.shape
         qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
         self.ui.label_tire_all.setPixmap(QPixmap.fromImage(qimg))

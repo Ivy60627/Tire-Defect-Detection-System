@@ -79,7 +79,7 @@ for pic in pic_list[:6]:
     mask_triangle=cv2.bitwise_and(mask_triangle, mask_oval)
     img=cv2.bitwise_and(img, img, mask=mask_triangle)
     
-    output = img[0:3300, 300:4000]
+    output = img[0:3300, 700:4000]
     
     # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
     # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗

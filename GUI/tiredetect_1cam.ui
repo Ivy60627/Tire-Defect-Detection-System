@@ -29,7 +29,7 @@
     <property name="font">
      <font>
       <family>微軟正黑體</family>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -48,7 +48,7 @@
     <property name="font">
      <font>
       <family>微軟正黑體</family>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
     <property name="text">
@@ -67,6 +67,7 @@
     <property name="font">
      <font>
       <family>微軟正黑體</family>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="autoFillBackground">
@@ -75,7 +76,7 @@
     <property name="title">
      <string>Side Camera</string>
     </property>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -90,7 +91,7 @@
         <property name="font">
          <font>
           <family>微軟正黑體</family>
-          <pointsize>12</pointsize>
+          <pointsize>14</pointsize>
          </font>
         </property>
         <property name="text">
@@ -272,6 +273,7 @@
     <property name="font">
      <font>
       <family>微軟正黑體</family>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="title">
@@ -300,7 +302,7 @@
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -330,7 +332,7 @@ Name</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -359,7 +361,7 @@ Name</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -388,7 +390,7 @@ Name</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -418,7 +420,7 @@ peel</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -447,7 +449,7 @@ peel</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -476,7 +478,7 @@ peel</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -506,7 +508,7 @@ scratches</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -540,7 +542,7 @@ mark</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -782,7 +784,7 @@ mark</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -1075,12 +1077,11 @@ mark</string>
           <property name="font">
            <font>
             <family>微軟正黑體</family>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Defect
-Rate</string>
+           <string>Defect Rate</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1370,6 +1371,7 @@ Rate</string>
     <property name="font">
      <font>
       <family>微軟正黑體</family>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="title">
