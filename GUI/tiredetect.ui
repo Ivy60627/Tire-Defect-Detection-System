@@ -67,7 +67,7 @@
     <property name="font">
      <font>
       <family>微軟正黑體</family>
-      <pointsize>11</pointsize>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="autoFillBackground">
@@ -472,7 +472,7 @@
     <property name="font">
      <font>
       <family>微軟正黑體</family>
-      <pointsize>11</pointsize>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="title">
@@ -1577,7 +1577,7 @@ Rate</string>
     <property name="font">
      <font>
       <family>微軟正黑體</family>
-      <pointsize>11</pointsize>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="title">

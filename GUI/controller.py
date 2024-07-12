@@ -96,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def display_all_img(self):
         img_path = 'connect_output.png'
         img = cv2.imread(img_path)
-        img = cv2.resize(img, (450, 450))
+        img = cv2.resize(img, (410, 410))
         height, width, channel = img.shape
         qimg = QImage(img, width, height, 3 * width, QImage.Format_RGB888).rgbSwapped()
         self.ui.label_tire_all.setPixmap(QPixmap.fromImage(qimg))
@@ -165,8 +165,8 @@ class ReadPartImage(QtCore.QThread):  # 繼承 QtCore.QThread 來建立
         transformation_image(f"{picture_path}left/", f"{perspective_path}left/")
         get_roi(f"{perspective_path}left/", f"{roi_path}left/")
         # right camera
-        transformation_image(f"{picture_path}right/", f"{perspective_path}right/", flip_vertical=True)
-        get_roi(f"{perspective_path}right/", f"{roi_path}right/")
+        transformation_image(f"{picture_path}right/", f"{perspective_path}right/", flip_vertical=False, loc='right')
+        get_roi(f"{perspective_path}right/", f"{roi_path}right/", loc='right')
         self.ReadPartImageFinished.emit()
 
         os.system(predict_script)  # 預測圖片

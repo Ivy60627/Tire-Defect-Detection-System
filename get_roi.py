@@ -27,6 +27,10 @@ for pic in pic_list[:6]:
 
     x1 = 2420 #調整左右
     y1 = 0    #調整上下
+    
+    x1 = 2050 #調整左右
+    y1 = 0    #調整上下
+    
     x2 = x1 + 1700 + 85
     y2 = y1 + 2930 + 146
     
@@ -79,7 +83,7 @@ for pic in pic_list[:6]:
     mask_triangle=cv2.bitwise_and(mask_triangle, mask_oval)
     img=cv2.bitwise_and(img, img, mask=mask_triangle)
     
-    output = img[0:3300, 300:4000]
+    output = img[0:3300, 400:3700]
     
     # cv2.namedWindow('image', cv2.WINDOW_KEEPRATIO)
     # cv2.setMouseCallback('image', show_xy)  # 設定偵測事件的函式與視窗
