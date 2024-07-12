@@ -43,6 +43,6 @@ def get_defect_rate(json_path: str, pic_path: str) -> dict:
 
     # calculate defect %
     for defect_num in range(7):
-        defect_rate[defect_num] = round(float(defect[defect_num] * 100 / front), 2)
+        defect_rate[defect_num] = round(float(defect[defect_num] * 100 / (6 * front)), 2)
     print("Finished get defect rate.")
     return defect_rate
