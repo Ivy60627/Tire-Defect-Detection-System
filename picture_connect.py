@@ -67,7 +67,9 @@ for index, pic_list in enumerate(pic_list):
     # 取得圖像的高度和寬度
     (h, w) = img.shape[:2]
     # 計算圖像的中心點
-    center = (1150 + 2420, 3703)
+    center = (1150 + 2230, 3703 + 160)
+    center = (1050 + 2470, 4903 + 80)
+    
     # 取得旋轉矩陣
     M = cv2.getRotationMatrix2D(center, index*60, 1.0)
     cos=np.abs(M[0,0])

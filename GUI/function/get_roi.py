@@ -19,12 +19,12 @@ def get_roi(pic_path: str, output_path: str, loc='left'):
     for pic in read_image_list(pic_path)[:6]:
         img = cv2.imread(pic_path + pic + '.png')
         if loc == 'left':
-            x1 = 2420 # 調整左右
-            y1 = 0  # 調整上下
+            x1 = 2470 # 調整左右
+            y1 = 80  # 調整上下
 
         if loc == 'right':
-            x1 = 2050  # 調整左右
-            y1 = 0  # 調整上下
+            x1 = 1930  # 調整左右
+            y1 = 160  # 調整上下
 
         x2 = x1 + 1700 + 85
         y2 = y1 + 2930 + 146
@@ -40,7 +40,8 @@ def get_roi(pic_path: str, output_path: str, loc='left'):
         # 顏色 粗細 橢圓大小
         color = (0, 0, 255)
         thickness = 10
-        oval_size = (3000, 2950)
+        #oval_size = (3000, 2950)
+        oval_size = (1900, 1850)
 
         # 畫橢圓
         cv2.ellipse(img, (x1, y1), oval_size, 90, 0, 360, color, thickness)
@@ -66,9 +67,9 @@ def get_roi(pic_path: str, output_path: str, loc='left'):
         img = cv2.bitwise_and(img, img, mask=mask_triangle)
 
         if loc == 'left':
-            output = img[0:3300, 700:4000]
+            output = img[0:2100, 1400:3500]
         if loc == 'right':
-            output = img[0:3300, 400:3700]
+            output = img[0:2100, 900:3000]
 
         cv2.imwrite(f'{output_path}{pic}.png', output)
     return output

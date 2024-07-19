@@ -8,7 +8,7 @@ def transformation_image(pic_path: str, output_path: str, flip_vertical=False, l
     # Define the transformation location of the image
     if loc == 'left':
         # [x左右,y上下]
-        a_1 = 150  # 影響左側的上下
+        a_1 = 230  # 影響左側的上下
         a_2 = 220  # 影響左側的左右
         a_3 = 3850  # 影響右側的左右
         p1 = np.float32([[a_2, a_1], [a_2, 3000 - a_1], [a_3, 0], [a_3, 3000]])
