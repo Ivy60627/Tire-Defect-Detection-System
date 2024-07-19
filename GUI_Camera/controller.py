@@ -23,7 +23,7 @@ class MainWindow_controller(QtWidgets.QMainWindow):
         self.img_num_left = 0
         self.img_num_right = 0
         self.grabber_l, self.sink_l, self.display_l = self.create_display('left')
-        # self.grabber_r, self.sink_r, self.display_r = self.create_display('right')
+        self.grabber_r, self.sink_r, self.display_r = self.create_display('right')
 
     def create_display(self, pos: str):
         try:
