@@ -38,7 +38,7 @@ def get_roi(pic_path: str, output_path: str, loc='left'):
             x3[1] = 4000
 
         # 顏色 粗細 橢圓大小
-        color = (0, 0, 255)
+        color = (255, 255, 255)
         thickness = 10
         #oval_size = (3000, 2950)
         oval_size = (1900, 1850)

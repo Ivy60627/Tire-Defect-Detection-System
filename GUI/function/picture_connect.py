@@ -78,6 +78,6 @@ def connect_picture(pic_path: str):
     # 轉換為cv2格式
     bg = cv2.cvtColor(np.asarray(bg), cv2.COLOR_RGBA2BGRA)
     # 裁切圖片 [上下, 左右]
-    bg = bg[1450:7750, 950:7250]
+    bg = bg[3750:3750+4000, 2000:2000+4000]
     cv2.imwrite('connect_output.png', bg)
     return bg
